@@ -1,26 +1,23 @@
-'use strict';
+const { uuid } = require('uuidv4');
+const bcrypt = require('bcryptjs');
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkInsert('People', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
+  up: (QueryInterface) => {
+    return QueryInterface.bulkInsert(
+      'users',
+      [
+        {
+          id: uuid(),
+          name: 'Admin Fast Tamplate',
+          email: 'admin@fastetmplate.com',
+          password_hash: bcrypt.hashSync('123456', 8),
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+      ],
+      {}
+    );
   },
 
-  down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
-  }
+  down: () => {},
 };

@@ -1,12 +1,12 @@
-require("dotenv/config");
+require('dotenv/config');
 
 module.exports = {
-  dialect: "postgres",
+  dialect: 'postgres',
   host: process.env.DB_HOST,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  timezone: "America/Sao_Paulo",
+  timezone: 'America/Sao_Paulo',
   define: {
     timestamps: true,
     underscored: true,

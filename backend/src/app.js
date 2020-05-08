@@ -1,14 +1,15 @@
-import "dotenv/config";
-import cors from "cors";
-import express from "express";
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
 
-import routes from "./routes";
+import routes from './routes';
 
-import "./database";
+import './database';
 
 class App {
   constructor() {
     this.server = express();
+
     this.middlewares();
     this.routes();
   }
@@ -22,4 +23,5 @@ class App {
     this.server.use(routes);
   }
 }
+
 export default new App().server;
