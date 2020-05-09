@@ -7,6 +7,7 @@ class UserController {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().required(),
+      telefone: Yup.number(),
       password: Yup.string().required().min(6),
     });
 
@@ -24,10 +25,12 @@ class UserController {
         .json({ error: 'Email informado já está cadastrado.' });
     }
 
-    const new_user = await User.create(req.body);
+    const { name, telefone } = await User.create(req.body);
 
     return res.json({
-      new_user,
+      name,
+      email,
+      telefone,
     });
   }
 
@@ -35,6 +38,7 @@ class UserController {
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
+      telefone: Yup.number(),
       oldPassword: Yup.string().min(6),
       password: Yup.string()
         .min(6)
@@ -68,10 +72,12 @@ class UserController {
       return res.status(401).json({ error: 'Senha inválida' });
     }
 
-    const upd_user = await user.update(req.body);
+    const { name, telefone } = await user.update(req.body);
 
     return res.json({
-      upd_user,
+      name,
+      email,
+      telefone,
     });
   }
 }
