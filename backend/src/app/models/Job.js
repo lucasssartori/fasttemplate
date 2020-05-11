@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Jobs extends Model {
+class Job extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -15,6 +15,10 @@ class Jobs extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.Transmission);
+  }
 }
 
-export default Jobs;
+export default Job;
