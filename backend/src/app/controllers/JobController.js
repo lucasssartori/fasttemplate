@@ -131,7 +131,7 @@ class JobController {
       return res.status(400).json({ error: 'Job informado inválido.' });
     }
 
-    await job.destroy(id);
+    await job.destroy();
 
     return res.json({
       message: 'Job excluido com sucesso!',
