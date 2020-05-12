@@ -18,7 +18,7 @@ export const Content = styled.div`
   border-radius: 4px;
   flex-direction: column;
   align-items: center;
-  padding: 0px 30px;
+  padding: 30px;
   padding-bottom: 30px;
 
   a {
@@ -29,5 +29,10 @@ export const Content = styled.div`
     &:hover {
       opacity: 1;
     }
+  }
+
+  img {
+    width: 85px;
+    height: 100px;
   }
 `;

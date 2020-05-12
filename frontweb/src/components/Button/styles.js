@@ -19,9 +19,8 @@ export const Container = styled.button.attrs((props) => ({
   color: #fff;
 
   border-radius: 4px;
-  font-weight: bold;
+  font-weight: 400;
   font-size: 14px;
-  line-height: 16px;
   border: 0;
 
   div {

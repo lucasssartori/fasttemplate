@@ -1,16 +1,18 @@
 import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+
 import { GoSignIn } from 'react-icons/go';
 import { MdPermIdentity } from 'react-icons/md';
 
 import Input from '~/components/SimpleInput';
-import Button from '~/components/Button';
-import { Form } from './styles';
+import { Form, DivButton, RegisterButton, SighInButton } from './styles';
 
 import { signUpRequest } from '~/store/modules/auth/actions';
 
-// import logo from '../../assets/images/fastfeet-logo.png';
+import history from '~/services/history';
+
+import logotipo from '~/assets/logo.png';
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -23,6 +25,7 @@ export default function SignIn() {
       formRef.current.setErrors({});
 
       const schema = Yup.object().shape({
+        name: Yup.string().required('O nome é obrigatório'),
         email: Yup.string()
           .email('Insira um e-mail válido')
           .required('O e-mail é obrigatório'),
@@ -51,6 +54,7 @@ export default function SignIn() {
 
   return (
     <>
+      <img src={logotipo} alt="logotipo" />
       <Form ref={formRef} onSubmit={handleSubmit}>
         <Input
           name="name"
@@ -70,19 +74,24 @@ export default function SignIn() {
           label="SUA SENHA"
           placeholder="Sua senha"
         />
-        <Button
+        <RegisterButton
           type="submit"
-          title="Entrar no Sistema"
+          title="Cadastrar"
           loading={loading}
           IconButton={GoSignIn}
         />
       </Form>
-      <Button
-        type="submit"
-        title="Cadastrar no Sistema"
-        loading={loading}
-        IconButton={MdPermIdentity}
-      />
+      <DivButton>
+        <SighInButton
+          type="button"
+          title="Fazer Login"
+          loading={loading}
+          IconButton={MdPermIdentity}
+          onClick={() => {
+            history.push('/');
+          }}
+        />
+      </DivButton>
     </>
   );
 }

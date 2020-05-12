@@ -30,12 +30,6 @@ export const Form = styled(Unform)`
   }
 `;
 
-export const Logo = styled.img`
-  height: 44px;
-  width: 259px;
-  margin-top: 50px;
-`;
-
 export const SighInButton = styled(Button)`
   height: 45px;
   background: #6b9f60;

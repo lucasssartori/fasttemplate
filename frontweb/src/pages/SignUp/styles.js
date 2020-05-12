@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { lighten } from 'polished';
 import { Form as Unform } from '@unform/web';
 
+import Button from '~/components/Button';
+
 export const Form = styled(Unform)`
   margin-top: 30px;
   width: 300px;
@@ -26,25 +28,39 @@ export const Form = styled(Unform)`
       color: #cccccc;
     }
   }
+`;
 
-  button {
-    height: 45px;
-    background: #0040ff;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #ffffff;
-    border: 0px;
-    transition: background 0.2s;
-    margin-bottom: 50px;
+export const SighInButton = styled(Button)`
+  height: 45px;
+  background: #6b9f60;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #ffffff;
+  border: 0px;
+  transition: background 0.2s;
 
-    &:hover {
-      background: ${lighten(0.18, '#0040ff')};
-    }
+  &:hover {
+    background: ${lighten(0.18, '#6B9F60')};
   }
 `;
 
-export const Logo = styled.img`
-  height: 44px;
-  width: 259px;
-  margin-top: 50px;
+export const RegisterButton = styled(Button)`
+  height: 45px;
+  background: #0040ff;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #ffffff;
+  border: 0px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: ${lighten(0.18, '#0040ff')};
+  }
+`;
+
+export const DivButton = styled.div`
+  margin-top: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
 `;

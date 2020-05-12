@@ -1,11 +1,11 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IoMdMenu } from 'react-icons/io';
 
 import { signOut } from '~/store/modules/auth/actions';
-import { Container, Content } from './styles';
-// import logo from '../../assets/images/fastfeet-logo.png';
+import { Container, Content, DivLogo, NavLinkStyle } from './styles';
+import logo from '~/assets/logo.png';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState('navbar');
@@ -47,16 +47,22 @@ export default function Header() {
   return (
     <Container>
       <Content>
-        <Link to="/">FastTemplate</Link>
+        <DivLogo>
+          <Link to="/">
+            <img src={logo} alt="FastTemplates" />
+          </Link>
+        </DivLogo>
         <button type="button" className="menu" onClick={() => handleMenu()}>
-          <IoMdMenu size={20} color="#7d40e7" />
+          <IoMdMenu size={20} color="#0040ff" />
         </button>
         <div className={menuOpen}>
           <nav>
             <ul>
               <li>
-                <NavLink
-                  activeClassName="chosen"
+                <NavLinkStyle
+                  activeStyle={{
+                    color: '#444444',
+                  }}
                   to="/jobs/list"
                   isActive={(match, location) => {
                     if (location.pathname.indexOf('/jobs/') !== -1) {
@@ -66,15 +72,15 @@ export default function Header() {
                   }}
                   onClick={handleCloseMenu}
                 >
-                  ENCOMENDAS
-                </NavLink>
+                  JOBS
+                </NavLinkStyle>
               </li>
             </ul>
           </nav>
           <aside>
             <strong>{name}</strong>
             <button type="button" onClick={handleSignOut}>
-              sair do sistema
+              Sair do Sistema
             </button>
           </aside>
         </div>

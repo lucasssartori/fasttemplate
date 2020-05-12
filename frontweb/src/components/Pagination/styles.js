@@ -10,7 +10,7 @@ export const Page = styled.div`
 
   button {
     border: none;
-    background: #7d40e7;
+    background: #0040ff;
     border-radius: 5px;
     font-size: 14px;
     padding: 5px 10px;

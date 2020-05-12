@@ -9,8 +9,9 @@ import Input from '~/components/SimpleInput';
 import { Form, DivButton, SighInButton, RegisterButton } from './styles';
 
 import { signInRequest } from '~/store/modules/auth/actions';
+import history from '~/services/history';
 
-// import logo from '../../assets/images/fastfeet-logo.png';
+import logotipo from '~/assets/logo.png';
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ export default function SignIn() {
 
   return (
     <>
+      <img src={logotipo} alt="logotipo" />
       <Form ref={formRef} onSubmit={handleSubmit}>
         <Input
           name="email"
@@ -64,7 +66,7 @@ export default function SignIn() {
         />
         <SighInButton
           type="submit"
-          title="Entrar no Sistema"
+          title="Entrar"
           loading={loading}
           IconButton={GoSignIn}
         />
@@ -72,9 +74,12 @@ export default function SignIn() {
       <DivButton>
         <RegisterButton
           type="submit"
-          title="Cadastrar no Sistema"
+          title="Cadastrar"
           loading={loading}
           IconButton={MdPermIdentity}
+          onClick={() => {
+            history.push('/signup');
+          }}
         />
       </DivButton>
     </>

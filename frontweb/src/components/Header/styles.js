@@ -1,10 +1,22 @@
 import styled from 'styled-components';
 
+import { NavLink } from 'react-router-dom';
+
 export const Container = styled.div`
   height: 64px;
   background: #fff;
   border: 1px solid #dddddd;
   box-sizing: border-box;
+`;
+
+export const DivLogo = styled.div`
+  padding-right: 20px;
+  margin-right: 20px;
+  border-right: 1px solid #dddddd;
+  img {
+    width: 32px;
+    height: 40px;
+  }
 `;
 
 export const Content = styled.div`
@@ -82,36 +94,12 @@ export const Content = styled.div`
     display: flex;
   }
 
-  img {
-    padding: 0px 20px;
-    margin-right: 20px;
-    border-right: 1px solid #dddddd;
-    width: 155px;
-    height: 24px;
-  }
-
   ul {
     display: flex;
     align-items: center;
 
     li {
       margin-right: 20px;
-
-      a {
-        font-style: normal;
-        font-weight: bold;
-        font-size: 15px;
-        line-height: 18px;
-        color: #999999;
-      }
-
-      a:hover {
-        color: #0040ff;
-      }
-
-      a.chosen {
-        color: #444444;
-      }
     }
   }
 
@@ -132,10 +120,10 @@ export const Content = styled.div`
     button {
       font-style: normal;
       font-weight: normal;
-      font-size: 14px;
+      font-size: 12px;
       line-height: 16px;
       text-align: right;
-      color: #7d40e7;
+      color: #ee4d64;
       border: 0;
       background: #fff;
       padding: 0;
@@ -144,5 +132,17 @@ export const Content = styled.div`
     @media (max-width: 740px) {
       align-items: center;
     }
+  }
+`;
+
+export const NavLinkStyle = styled(NavLink)`
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 18px;
+  color: #999999;
+
+  :hover {
+    color: #0040ff;
   }
 `;

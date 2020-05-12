@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AsyncSelect from 'react-select/async';
-
 import { useField } from '@unform/core';
 
 export default function ReactAsyncSelect({
@@ -19,7 +18,7 @@ export default function ReactAsyncSelect({
     if (!multiple) {
       return selectValue ? selectValue.id : '';
     }
-    return selectValue ? selectValue.map(option => option.id) : [];
+    return selectValue ? selectValue.map((option) => option.id) : [];
   }
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export default function ReactAsyncSelect({
       ref: ref.current,
       path: 'props.value',
       parseValue: parseSelectValue,
-      clearValue: selectRef => {
+      clearValue: (selectRef) => {
         selectRef.select.clearValue();
       },
     });
@@ -37,14 +36,13 @@ export default function ReactAsyncSelect({
   return (
     <>
       {label && <label htmlFor={fieldName}>{label}</label>}
-
       <AsyncSelect
         name={fieldName}
         cacheOptions
         loadOptions={options}
         defaultOptions
-        getOptionValue={option => option.id}
-        getOptionLabel={option => option.name}
+        getOptionValue={(option) => option.id}
+        getOptionLabel={(option) => option.name}
         ref={ref}
         {...rest}
       />

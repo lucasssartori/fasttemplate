@@ -12,9 +12,9 @@ export default function Routes() {
     <Switch>
       <Route path="/" exact component={SignIn} />
       <Route path="/SignUp" exact component={SignUp} />
-      <Route path="/job/list" component={JobsList} isPrivate />
-      <Route path="/job/store" component={JobsStore} isPrivate />
-      <Route path="/job/update/:id" component={JobsStore} isPrivate />
+      <Route path="/jobs/list" component={JobsList} isPrivate />
+      <Route path="/jobs/store" component={JobsStore} isPrivate />
+      <Route path="/jobs/update/:id" component={JobsStore} isPrivate />
     </Switch>
   );
 }

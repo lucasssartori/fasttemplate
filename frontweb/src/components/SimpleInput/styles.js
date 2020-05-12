@@ -19,3 +19,9 @@ export const Container = styled.div`
     font-weight: bold;
   }
 `;
+
+export const Icon = styled.span`
+  position: absolute;
+  margin-left: 10px;
+  padding-top: 3px;
+`;
