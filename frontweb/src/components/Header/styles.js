@@ -10,7 +10,7 @@ export const Container = styled.div`
 `;
 
 export const DivLogo = styled.div`
-  padding-right: 20px;
+  padding: 0 20px;
   margin-right: 20px;
   border-right: 1px solid #dddddd;
   img {
@@ -138,7 +138,7 @@ export const Content = styled.div`
 export const NavLinkStyle = styled(NavLink)`
   font-style: normal;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 12px;
   line-height: 18px;
   color: #999999;
 

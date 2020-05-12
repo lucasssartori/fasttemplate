@@ -75,6 +75,23 @@ export default function Header() {
                   JOBS
                 </NavLinkStyle>
               </li>
+              <li>
+                <NavLinkStyle
+                  activeStyle={{
+                    color: '#444444',
+                  }}
+                  to="/history/list"
+                  isActive={(match, location) => {
+                    if (location.pathname.indexOf('/history/') !== -1) {
+                      return true;
+                    }
+                    return false;
+                  }}
+                  onClick={handleCloseMenu}
+                >
+                  HISTORIAS
+                </NavLinkStyle>
+              </li>
             </ul>
           </nav>
           <aside>

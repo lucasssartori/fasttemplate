@@ -6,13 +6,13 @@ import { Container } from './styles';
 
 export default function Button({ title, loading, IconButton, ...rest }) {
   return (
-    <Container {...rest} loading={loading}>
+    <Container {...rest} loading={loading ? 1 : 0}>
       {loading ? (
         <FaSpinner color="#fff" size={20} />
       ) : (
         <div>
-          <IconButton color="#fff" size={20} />
-          <p>{title}</p>
+          {IconButton && <IconButton color="#fff" size={20} />}
+          {title && <p>{title}</p>}
         </div>
       )}
     </Container>
@@ -20,12 +20,13 @@ export default function Button({ title, loading, IconButton, ...rest }) {
 }
 
 Button.propTypes = {
-  title: PropTypes.string.isRequired,
-  loading: PropTypes.number,
+  title: PropTypes.string,
+  loading: PropTypes.bool,
   IconButton: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
 };
 
 Button.defaultProps = {
-  loading: 0,
+  title: null,
+  loading: false,
   IconButton: null,
 };

@@ -4,29 +4,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  div {
-    display: flex;
-    flex-direction: row;
-
-    input {
-      border: 1px solid #cccccc;
-      border-radius: 4px;
-      width: 100%;
-      height: 38px;
-      padding: 0 10px;
-
-      ::placeholder {
-        color: #dddddd;
-      }
-    }
-
-    span {
-      position: absolute;
-      margin-left: 6px;
-      padding-top: 3px;
-    }
-  }
-
   label {
     font-size: 14px;
     line-height: 19px;
@@ -41,5 +18,9 @@ export const Container = styled.div`
     margin-top: 5px;
     margin-bottom: 20px;
     font-weight: bold;
+  }
+
+  .react-select__placeholder {
+    color: #dddddd;
   }
 `;

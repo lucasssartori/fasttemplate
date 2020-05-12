@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useField } from '@unform/core';
 
-import { Container, Icon } from './styles';
+import { Container } from './styles';
 
 export default function Input({ name, label, IconInput, ...rest }) {
   const inputRef = useRef(null);
@@ -19,15 +19,15 @@ export default function Input({ name, label, IconInput, ...rest }) {
   return (
     <Container>
       {label && <label htmlFor={fieldName}>{label}</label>}
-      <Icon>
-        <IconInput size={22} color="#999999" />
-      </Icon>
-      <input
-        id={fieldName}
-        ref={inputRef}
-        defaultValue={defaultValue}
-        {...rest}
-      />
+      <div>
+        <span>{IconInput && <IconInput size={22} color="#999999" />}</span>
+        <input
+          id={fieldName}
+          ref={inputRef}
+          defaultValue={defaultValue}
+          {...rest}
+        />
+      </div>
       {error && <span className="error">{error}</span>}
     </Container>
   );
