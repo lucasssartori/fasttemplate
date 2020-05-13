@@ -15,6 +15,7 @@ import {
   DivDescription,
 } from './styles';
 import Input from '~/components/SimpleInput';
+import TextArea from '~/components/TextArea';
 import Select from '~/components/ReactSelect';
 import Systems from '~/enums/EnumSystems';
 
@@ -36,10 +37,19 @@ function JobControlForm() {
           setTitle('Edição de Job');
           const response = await api.get(`jobs/${id}`);
 
-          setJob(response.data.job);
-          setSystem(
-            Systems.find((option) => option.value === response.data.job.system)
+          const data = response.data.job;
+          const returnSystem = Systems.find(
+            (option) => option.value === response.data.job.system
           );
+
+          setJob({
+            id: data.id,
+            name: data.name,
+            system: returnSystem.value,
+            description: data.description,
+          });
+
+          setSystem(returnSystem);
         } else {
           setTitle('Cadastro de Job');
         }
@@ -53,6 +63,8 @@ function JobControlForm() {
   async function handleSubmitAdd(data) {
     try {
       formRef.current.setErrors({});
+      console.log(job);
+      console.log(data);
 
       const schema = Yup.object().shape({
         name: Yup.string()
@@ -70,6 +82,8 @@ function JobControlForm() {
       });
 
       const { name, system, description } = data;
+
+      console.log(description);
 
       if (id) {
         await api.put(`jobs/${id}`, {
@@ -151,7 +165,7 @@ function JobControlForm() {
             </div>
           </DivData>
           <DivDescription>
-            <Input
+            <TextArea
               label="Descrição do Job"
               name="description"
               placeholder="Informe uma descrição para o Job"

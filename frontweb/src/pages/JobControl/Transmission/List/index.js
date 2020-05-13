@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { MdArrowBack, MdDescription } from 'react-icons/md';
+
 import api from '~/services/api';
 import history from '~/services/history';
 import Listing from './Listing';
@@ -9,10 +11,13 @@ import Listing from './Listing';
 import {
   Container,
   HeaderPage,
+  Header,
   DataJob,
   DivNameSystem,
   DivLabel,
   Mensagem,
+  BackButton,
+  TransmissionButton,
 } from './styles';
 
 function TransmissionList() {
@@ -37,6 +42,25 @@ function TransmissionList() {
     loadJobs();
   }, [id]);
 
+  async function handleTransmissao() {
+    try {
+      await api.get(`transmissionstemplate/${job.id}`).then(({ data }) => {
+        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute(
+          'download',
+          `Docmento_de_transmissão_${job.name}.docx`
+        ); // any other extension
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      });
+    } catch (error) {
+      toast.warn(error.response.data.error);
+    }
+  }
+
   return (
     <Container>
       {loading ? (
@@ -49,7 +73,25 @@ function TransmissionList() {
       ) : (
         <>
           <HeaderPage>
-            <h1>Gerenciando Transmissões de Job</h1>
+            <Header>
+              <h1>Gerenciando Transmissões de Job</h1>
+              <div>
+                <BackButton
+                  title="VOLTAR"
+                  IconButton={MdArrowBack}
+                  type="button"
+                  onClick={() => {
+                    history.push('/jobs/list');
+                  }}
+                />
+                <TransmissionButton
+                  title="Transmissão"
+                  IconButton={MdDescription}
+                  type="button"
+                  onClick={handleTransmissao}
+                />
+              </div>
+            </Header>
             <DataJob>
               <DivNameSystem>
                 <DivLabel>

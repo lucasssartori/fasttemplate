@@ -129,31 +129,42 @@ export const DivSystem = styled.div`
   flex: 1;
 
   .job_system {
-    border-radius: 15px;
-    width: min-content;
-    padding: 4px 12px 2px 12px;
+    border-radius: 4px;
+    width: max-content;
+    padding: 4px 12px 4px 12px;
     font-weight: bold;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+
     p:first-child {
       margin-right: 4px;
     }
   }
 
-  .STC {
+  .STC_VOZ {
+    background-color: #f0f0df;
+    p {
+      font-size: 12px;
+      color: #c1bc35;
+    }
+  }
+  .STC_DADOS {
     background-color: #dff0df;
     p {
-      font-size: 14px;
+      font-size: 12px;
       color: #2ca42b;
     }
   }
-  .SAC {
-    background-color: #f0f0df;
+  .SISRAF {
+    background-color: #fab0b0;
     p {
-      font-size: 14px;
-      color: #c1bc35;
+      font-size: 12px;
+      color: #de3b3b;
+    }
+  }
+  .SAC {
+    background-color: #bad2ff;
+    p {
+      font-size: 12px;
+      color: #4d85ee;
     }
   }
 `;

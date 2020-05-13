@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import Button from '~/components/Button';
+
 export const Container = styled.div`
   width: 900px;
   margin: 20px auto;
@@ -10,9 +12,20 @@ export const HeaderPage = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 900px;
 
   h1 {
     color: #03022e;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -65,4 +78,16 @@ export const Mensagem = styled.div`
     font-size: 15px;
     color: #666666;
   }
+`;
+
+export const BackButton = styled(Button)`
+  width: 112px;
+  padding: 0 15px;
+  margin-right: 16px;
+  background: #cccccc;
+`;
+
+export const TransmissionButton = styled(Button)`
+  padding: 0 15px;
+  background: #0040ff;
 `;

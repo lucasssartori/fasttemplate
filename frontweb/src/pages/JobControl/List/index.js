@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Form } from '@unform/web';
 import { toast } from 'react-toastify';
 import { MdAdd, MdSearch, MdClear } from 'react-icons/md';
-import { FaCircle } from 'react-icons/fa';
 import { confirmAlert } from 'react-confirm-alert';
 
 import api from '~/services/api';
@@ -10,6 +9,7 @@ import history from '~/services/history';
 import Pagination from '~/components/Pagination';
 import Input from '~/components/SimpleInput';
 import Actions from '~/components/MenuActions';
+import Systems from '~/enums/EnumSystems';
 
 import {
   Container,
@@ -59,12 +59,11 @@ function JobControlList() {
             return {
               id: jobMap.id,
               name: jobMap.name,
-              system: jobMap.system,
+              system: Systems.find((option) => option.value === jobMap.system),
               description: compact_desc,
             };
           })
         );
-
         setLoading(false);
       } catch (error) {
         setJobs([]);
@@ -180,11 +179,8 @@ function JobControlList() {
                   <TextTable>{item.name}</TextTable>
                 </DivName>
                 <DivSystem>
-                  <div className={`job_system ${item.system}`}>
-                    <TextTable>
-                      <FaCircle size={10} />
-                    </TextTable>
-                    <TextTable>{item.system}</TextTable>
+                  <div className={`job_system ${item.system.value}`}>
+                    <TextTable>{item.system.label}</TextTable>
                   </div>
                 </DivSystem>
                 <DivDescription>
