@@ -27,17 +27,19 @@ function JobControlForm() {
   const { id } = useParams();
   const [titleForm, setTitle] = useState();
   const [job, setJob] = useState();
-  const [systems, setSystems] = useState();
+  const [system_form, setSystem] = useState(false);
 
   useEffect(() => {
     async function loadJobs() {
-      setSystems(Systems);
       try {
         if (id) {
           setTitle('Edição de Job');
           const response = await api.get(`jobs/${id}`);
 
           setJob(response.data.job);
+          setSystem(
+            Systems.find((option) => option.value === response.data.job.system)
+          );
         } else {
           setTitle('Cadastro de Job');
         }
@@ -141,7 +143,9 @@ function JobControlForm() {
               <Select
                 label="Sistema"
                 name="system"
-                options={systems}
+                options={Systems}
+                value={system_form}
+                onChange={(e) => setSystem(e)}
                 placeholder="Informe o sistema"
               />
             </div>

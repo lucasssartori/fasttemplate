@@ -5,6 +5,7 @@ import {
   MdEdit,
   MdDeleteForever,
   MdVisibility,
+  MdSwapHoriz,
 } from 'react-icons/md';
 
 import {
@@ -15,7 +16,13 @@ import {
   BtnAction,
 } from './styles';
 
-export default function MenuActions({ Show, Edit, Delete, Cancel }) {
+export default function MenuActions({
+  Show,
+  Edit,
+  Delete,
+  Cancel,
+  Transmission,
+}) {
   const [visible, setVisible] = useState(false);
   const [width, setWidth] = useState(150);
 
@@ -44,9 +51,9 @@ export default function MenuActions({ Show, Edit, Delete, Cancel }) {
     Delete();
   }
 
-  function handleCancel() {
+  function handleTransmisão() {
     setVisible(!visible);
-    Cancel();
+    Transmission();
   }
 
   return (
@@ -75,10 +82,10 @@ export default function MenuActions({ Show, Edit, Delete, Cancel }) {
               <p>Excluir</p>
             </ActionMenu>
           )}
-          {Cancel && (
-            <ActionMenu onClick={handleCancel}>
-              <MdDeleteForever size={18} color="#DE3B3B" />
-              <p>Cancelar Encomenda</p>
+          {Transmission && (
+            <ActionMenu onClick={handleTransmisão}>
+              <MdSwapHoriz size={18} color="#8E5BE8" />
+              <p>Transmisão</p>
             </ActionMenu>
           )}
         </ListActions>
@@ -92,6 +99,7 @@ MenuActions.propTypes = {
   Edit: PropTypes.func,
   Delete: PropTypes.func,
   Cancel: PropTypes.func,
+  Transmission: PropTypes.func,
 };
 
 MenuActions.defaultProps = {
@@ -99,4 +107,5 @@ MenuActions.defaultProps = {
   Edit: null,
   Delete: null,
   Cancel: null,
+  Transmission: null,
 };

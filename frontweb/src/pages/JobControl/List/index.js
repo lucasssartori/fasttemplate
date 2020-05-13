@@ -194,6 +194,9 @@ function JobControlList() {
                   <Actions
                     Edit={() => history.push(`/jobs/update/${item.id}`)}
                     Delete={() => confirmDelete(item)}
+                    Transmission={() =>
+                      history.push(`/transmission/list/${item.id}`)
+                    }
                   />
                 </DivActions>
               </TableRow>

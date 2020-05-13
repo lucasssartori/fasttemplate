@@ -1,8 +1,8 @@
-const Tecnologies = Object.freeze({
-  1: Symbol('FTP'),
-  2: Symbol('SFTP'),
-  3: Symbol('PELICAN'),
-  4: Symbol('CONNECT'),
-});
+const Tecnologies = [
+  { value: 'FTP', label: 'FTP' },
+  { value: 'SFTP', label: 'SFTP' },
+  { value: 'PELICAN', label: 'PELICAN' },
+  { value: 'CONNECT', label: 'CONNECT' },
+];
 
 export default Tecnologies;
