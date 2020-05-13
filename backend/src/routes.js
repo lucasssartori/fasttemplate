@@ -14,7 +14,6 @@ routes.post('/sessions', SessionController.store);
 
 routes.post('/users', UserController.store);
 routes.get('/transmissionstemplate/:id', TransmissionTemplateController.index);
-
 // ---------------------------------------------------------------------------------
 // Rotas com autenticação de Token
 // ---------------------------------------------------------------------------------
