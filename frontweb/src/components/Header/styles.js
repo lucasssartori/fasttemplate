@@ -1,12 +1,18 @@
 import styled from 'styled-components';
-
 import { NavLink } from 'react-router-dom';
 
+import Colors from '~/components/Colors';
+
 export const Container = styled.div`
+  width: 100%;
   height: 64px;
-  background: #fff;
-  border: 1px solid #dddddd;
+  background: ${Colors.PrimaryColor};
+  border: 1px solid #cccccc;
   box-sizing: border-box;
+  position: fixed;
+  z-index: 999;
+  left: 0px;
+  top: 0px;
 `;
 
 export const DivLogo = styled.div`
@@ -70,7 +76,7 @@ export const Content = styled.div`
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 51, 102, 0.9);
     z-index: 1;
   }
 
@@ -109,24 +115,28 @@ export const Content = styled.div`
     align-items: flex-end;
     margin-right: 20px;
 
-    strong {
-      font-style: normal;
-      font-weight: bold;
-      font-size: 14px;
-      line-height: 16px;
-      color: #666666;
+    p {
+      font-weight: normal;
+      font-size: 12px;
+      color: #eeeeee;
     }
 
     button {
-      font-style: normal;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 16px;
-      text-align: right;
-      color: #ee4d64;
+      margin-top: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border: 0;
-      background: #fff;
+      background: transparent;
       padding: 0;
+
+      p {
+        margin-right: 4px;
+        font-weight: normal;
+        font-size: 12px;
+        text-align: right;
+        color: #fab000;
+      }
     }
 
     @media (max-width: 740px) {
@@ -140,9 +150,9 @@ export const NavLinkStyle = styled(NavLink)`
   font-weight: bold;
   font-size: 12px;
   line-height: 18px;
-  color: #999999;
+  color: #bbbbbb;
 
   :hover {
-    color: #0040ff;
+    color: #fab000;
   }
 `;

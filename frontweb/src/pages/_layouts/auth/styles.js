@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
+import Colors from '~/components/Colors';
+
 export const Wrapper = styled.div`
   height: 100%;
-  background: linear-gradient(-90deg, #0040ff, #151515);
+  background: linear-gradient(-90deg, ${Colors.PrimaryColor}, #151515);
   display: flex;
   justify-content: center;
   align-items: center;

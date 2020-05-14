@@ -1,9 +1,14 @@
 import styled from 'styled-components';
-import { lighten } from 'polished';
+
+import Colors from '~/components/Colors';
 
 export const Wrapper = styled.div`
   height: auto !important;
   min-height: 100%;
   padding-bottom: 10px;
-  background: ${lighten(0.45, '#0040ff')};
+  background: ${Colors.BackgrounColor};
+`;
+
+export const Children = styled.div`
+  padding-top: 64px;
 `;

@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { lighten } from 'polished';
 import { Form as Unform } from '@unform/web';
 
+import Colors from '~/components/Colors';
+
 import Button from '~/components/Button';
 
 export const Form = styled(Unform)`
@@ -18,21 +20,21 @@ export const Form = styled(Unform)`
   input {
     height: 45px;
     background: #ffffff;
-    border: 1px solid #cccccc;
+    border: 1px solid ${Colors.BorderColor};
     box-sizing: border-box;
     border-radius: 4px;
     margin-bottom: 20px;
     padding: 10px;
 
     &::placeholder {
-      color: #cccccc;
+      color: ${Colors.PlaceholderColor};
     }
   }
 `;
 
 export const SighInButton = styled(Button)`
   height: 45px;
-  background: #6b9f60;
+  background: ${Colors.ButtomGreen};
   border-radius: 4px;
   font-size: 16px;
   color: #ffffff;
@@ -40,13 +42,13 @@ export const SighInButton = styled(Button)`
   transition: background 0.2s;
 
   &:hover {
-    background: ${lighten(0.18, '#6B9F60')};
+    background: ${lighten(0.18, Colors.ButtomGreen)};
   }
 `;
 
 export const RegisterButton = styled(Button)`
   height: 45px;
-  background: #0040ff;
+  background: ${Colors.PrimaryColor};
   border-radius: 4px;
   font-size: 16px;
   color: #ffffff;
@@ -54,7 +56,7 @@ export const RegisterButton = styled(Button)`
   transition: background 0.2s;
 
   &:hover {
-    background: ${lighten(0.18, '#0040ff')};
+    background: ${lighten(0.18, Colors.PrimaryColor)};
   }
 `;
 

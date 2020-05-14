@@ -2,10 +2,11 @@ import React, { useState, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IoMdMenu } from 'react-icons/io';
+import { MdDescription } from 'react-icons/md';
+import { GoSignOut } from 'react-icons/go';
 
 import { signOut } from '~/store/modules/auth/actions';
 import { Container, Content, DivLogo, NavLinkStyle } from './styles';
-import logo from '~/assets/logo.png';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState('navbar');
@@ -49,11 +50,11 @@ export default function Header() {
       <Content>
         <DivLogo>
           <Link to="/">
-            <img src={logo} alt="FastTemplates" />
+            <MdDescription color="#fff" size={30} />
           </Link>
         </DivLogo>
         <button type="button" className="menu" onClick={() => handleMenu()}>
-          <IoMdMenu size={20} color="#0040ff" />
+          <IoMdMenu size={20} color="#003366" />
         </button>
         <div className={menuOpen}>
           <nav>
@@ -61,7 +62,7 @@ export default function Header() {
               <li>
                 <NavLinkStyle
                   activeStyle={{
-                    color: '#444444',
+                    color: '#eeeeee',
                   }}
                   to="/jobs/list"
                   isActive={(match, location) => {
@@ -78,7 +79,7 @@ export default function Header() {
               <li>
                 <NavLinkStyle
                   activeStyle={{
-                    color: '#444444',
+                    color: '#eeeeee',
                   }}
                   to="/history/list"
                   isActive={(match, location) => {
@@ -95,9 +96,10 @@ export default function Header() {
             </ul>
           </nav>
           <aside>
-            <strong>{name}</strong>
+            <p>{name}</p>
             <button type="button" onClick={handleSignOut}>
-              Sair do Sistema
+              <p>Sair</p>
+              <GoSignOut color="#fab000" size={12} />
             </button>
           </aside>
         </div>
