@@ -12,9 +12,8 @@ export default function Input({ name, label, ...rest }) {
     registerField({
       name: fieldName,
       ref: inputRef.current,
-      path: 'Value',
+      path: 'value',
     });
-    console.log(inputRef.current);
   }, [fieldName, registerField]);
 
   return (
@@ -25,7 +24,7 @@ export default function Input({ name, label, ...rest }) {
           id={fieldName}
           ref={inputRef}
           defaultValue={defaultValue}
-          maxLength={250}
+          maxlength={250}
           rows={3}
           {...rest}
         />

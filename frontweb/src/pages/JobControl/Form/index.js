@@ -13,10 +13,12 @@ import {
   ContentForm,
   DivData,
   DivDescription,
+  Mensagem,
 } from './styles';
 import Input from '~/components/SimpleInput';
 import TextArea from '~/components/TextArea';
 import Select from '~/components/ReactSelect';
+import ObjetcEqual from '~/util/ObjetcEqual';
 import Systems from '~/enums/EnumSystems';
 
 import api from '~/services/api';
@@ -28,28 +30,28 @@ function JobControlForm() {
   const { id } = useParams();
   const [titleForm, setTitle] = useState();
   const [job, setJob] = useState();
-  const [system_form, setSystem] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadJobs() {
       try {
         if (id) {
+          setLoading(true);
           setTitle('Edição de Job');
           const response = await api.get(`jobs/${id}`);
 
           const data = response.data.job;
-          const returnSystem = Systems.find(
+          const aux_system = Systems.find(
             (option) => option.value === response.data.job.system
           );
 
           setJob({
             id: data.id,
             name: data.name,
-            system: returnSystem.value,
+            system: aux_system.value,
             description: data.description,
           });
-
-          setSystem(returnSystem);
+          setLoading(false);
         } else {
           setTitle('Cadastro de Job');
         }
@@ -61,11 +63,16 @@ function JobControlForm() {
   }, [id]);
 
   async function handleSubmitAdd(data) {
+    const aux_job = job;
+    delete aux_job.id;
+
+    if (ObjetcEqual(aux_job, data)) {
+      toast.warn('Não houve alteração no Job!');
+      return;
+    }
+
     try {
       formRef.current.setErrors({});
-      console.log(job);
-      console.log(data);
-
       const schema = Yup.object().shape({
         name: Yup.string()
           .min(8, 'Nome deve possuir 8 caracteres')
@@ -82,8 +89,6 @@ function JobControlForm() {
       });
 
       const { name, system, description } = data;
-
-      console.log(description);
 
       if (id) {
         await api.put(`jobs/${id}`, {
@@ -138,41 +143,45 @@ function JobControlForm() {
           />
         </div>
       </HeaderPage>
-      <ContentForm>
-        <Form
-          initialData={job}
-          ref={formRef}
-          id="job"
-          onSubmit={handleSubmitAdd}
-        >
-          <DivData>
-            <div>
-              <Input
-                label="Nome do Job"
-                name="name"
-                placeholder="Informe o nome do Job"
+      {loading ? (
+        <Mensagem>
+          <h1>Carregando Job...</h1>
+        </Mensagem>
+      ) : (
+        <ContentForm>
+          <Form
+            initialData={job}
+            ref={formRef}
+            id="job"
+            onSubmit={handleSubmitAdd}
+          >
+            <DivData>
+              <div>
+                <Input
+                  label="Nome do Job"
+                  name="name"
+                  placeholder="Informe o nome do Job"
+                />
+              </div>
+              <div>
+                <Select
+                  label="Sistema"
+                  name="system"
+                  options={Systems}
+                  placeholder="Informe o sistema"
+                />
+              </div>
+            </DivData>
+            <DivDescription>
+              <TextArea
+                label="Descrição do Job"
+                name="description"
+                placeholder="Informe uma descrição para o Job"
               />
-            </div>
-            <div>
-              <Select
-                label="Sistema"
-                name="system"
-                options={Systems}
-                value={system_form}
-                onChange={(e) => setSystem(e)}
-                placeholder="Informe o sistema"
-              />
-            </div>
-          </DivData>
-          <DivDescription>
-            <TextArea
-              label="Descrição do Job"
-              name="description"
-              placeholder="Informe uma descrição para o Job"
-            />
-          </DivDescription>
-        </Form>
-      </ContentForm>
+            </DivDescription>
+          </Form>
+        </ContentForm>
+      )}
     </Container>
   );
 }

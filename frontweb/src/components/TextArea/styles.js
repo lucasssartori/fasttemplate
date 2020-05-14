@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { TextArea as TArea } from 'semantic-ui-react';
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -34,12 +32,13 @@ export const Container = styled.div`
   }
 `;
 
-export const TextArea = styled(TArea)`
+export const TextArea = styled.textarea`
   border: 1px solid #cccccc;
   border-radius: 4px;
   width: 100%;
   padding: 10px 10px;
   font: 14px 'Roboto', sans-serif;
+  resize: none;
 
   ::placeholder {
     color: #dddddd;

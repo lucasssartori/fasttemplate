@@ -27,7 +27,6 @@ const Select = ({ name, label, options, ...rest }) => {
         return ref.state.value.value;
       },
     });
-    console.log(selectRef.current);
   }, [fieldName, registerField, rest.isMulti]);
 
   return (
@@ -35,7 +34,7 @@ const Select = ({ name, label, options, ...rest }) => {
       {label && <label htmlFor={fieldName}>{label}</label>}
       <ReactSelect
         ref={selectRef}
-        defaultValue={defaultValue}
+        defaultValue={options.find((option) => option.value === defaultValue)}
         classNamePrefix="react-select"
         options={options}
         {...rest}

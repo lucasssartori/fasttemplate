@@ -59,3 +59,17 @@ export const DivDescription = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const Mensagem = styled.div`
+  width: auto;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  border-radius: 5px;
+  background: #fff;
+  h1 {
+    font-size: 15px;
+    color: #666666;
+  }
+`;
