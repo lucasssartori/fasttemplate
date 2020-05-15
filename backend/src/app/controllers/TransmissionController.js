@@ -124,16 +124,16 @@ class TransmissionController {
     const { id } = req.params;
     const { page = 1 } = req.query;
 
-    const transmissionsJobs = await Job.findByPk(id, {
+    const job = await Job.findByPk(id, {
       include: { model: Transmission, limit: 10, offset: (page - 1) * 10 },
     });
 
-    if (!transmissionsJobs) {
+    if (!job) {
       return res.status(400).json({ error: 'Job informado inválido.' });
     }
 
     return res.json({
-      transmissionsJobs,
+      job,
     });
   }
 
