@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Collapse } from '@material-ui/core';
+import { lighten } from 'polished';
 
 export const Mensagem = styled.div`
   width: auto;
@@ -15,11 +17,48 @@ export const Mensagem = styled.div`
   }
 `;
 
-export const DataTransmission = styled.div`
+export const DataTransmission = styled(Collapse)`
   margin-top: 25px;
   padding: 15px;
   border-radius: 5px;
   background: #fff;
+  box-shadow: 5px 5px 5px #bbbbbb;
+`;
+
+export const DivButons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const OpenButton = styled.button`
+  display: flex;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border: 0;
+  border-radius: 3px;
+  padding: 0 3px;
+  background: #6b9f60;
+
+  &:hover {
+    background: ${lighten(0.18, '#6B9F60')};
+  }
+`;
+
+export const CloseBotton = styled.button`
+  display: flex;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border: 0;
+  border-radius: 3px;
+  background: #ee4d64;
+
+  &:hover {
+    background: ${lighten(0.18, '#ee4d64')};
+  }
 `;
 
 export const SourseDestiny = styled.div`
@@ -34,6 +73,7 @@ export const DivLabel = styled.label`
   padding: 3px;
   border-radius: 5px;
   border: 1px solid #dddddd;
+  background: #eeeeee;
   margin: 10px;
 
   p {
@@ -53,16 +93,17 @@ export const LabelData = styled.h6`
 
 export const DivHead = styled.label`
   display: flex;
-  flex: 3;
+  flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 3px;
+  border-radius: 5px;
+  background: #003344;
+  padding: 6px 0px;
   margin: 10px;
+  box-shadow: 5px 5px 5px #bbbbbb;
 
   h3 {
     font-size: 14px;
-    line-height: 19px;
-    margin-left: 12px;
-    color: #444444;
+    color: #fab000;
   }
 `;

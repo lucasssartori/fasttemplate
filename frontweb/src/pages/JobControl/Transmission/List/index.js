@@ -7,12 +7,14 @@ import { MdArrowBack, MdDescription } from 'react-icons/md';
 import api from '~/services/api';
 import history from '~/services/history';
 import Listing from './Listing';
+import Systems from '~/enums/EnumSystems';
 
 import {
   Container,
   HeaderPage,
   Header,
   DataJob,
+  DivHead,
   DivNameSystem,
   DivLabel,
   Mensagem,
@@ -32,8 +34,19 @@ function TransmissionList() {
       try {
         setLoading(true);
         const response = await api.get(`transmissionsjobs/${id}`);
-        setJob(response.data.transmissionsJobs);
-        setTransmissios(response.data.transmissionsJobs.Transmissions);
+        const data = response.data.job;
+        const aux_system = Systems.find(
+          (option) => option.value === data.system
+        );
+
+        setJob({
+          id: data.id,
+          name: data.name,
+          system: aux_system.label,
+          description: data.description,
+        });
+
+        setTransmissios(data.Transmissions);
         setLoading(false);
       } catch (error) {
         toast.error(error.response.data.error);
@@ -85,31 +98,38 @@ function TransmissionList() {
                   }}
                 />
                 <TransmissionButton
-                  title="Transmissão"
+                  title=".DOCX"
                   IconButton={MdDescription}
                   type="button"
                   onClick={handleTransmissao}
+                  disabled={!(transmissios.length > 0)}
                 />
               </div>
             </Header>
             <DataJob>
+              <DivHead>
+                <h3>Dados da Etapa</h3>
+              </DivHead>
               <DivNameSystem>
                 <DivLabel>
-                  <label>Nome do Job:</label>
+                  <strong>Nome do Job:</strong>
                   <p>{job.name}</p>
                 </DivLabel>
                 <DivLabel>
-                  <label>Sistema:</label>
+                  <strong>Sistema:</strong>
                   <p>{job.system}</p>
                 </DivLabel>
               </DivNameSystem>
               <DivLabel>
-                <label>Descrição:</label>
+                <strong>Descrição:</strong>
                 <p>{job.description}</p>
               </DivLabel>
             </DataJob>
           </HeaderPage>
-          <Listing transmissios={transmissios} />
+          <Listing
+            transmissios={transmissios}
+            setTransmissios={setTransmissios}
+          />
         </>
       )}
     </Container>

@@ -13,6 +13,7 @@ export const Container = styled.div`
   z-index: 999;
   left: 0px;
   top: 0px;
+  box-shadow: 5px 5px 10px #bbbbbb;
 `;
 
 export const DivLogo = styled.div`
@@ -59,7 +60,7 @@ export const Content = styled.div`
     .menu {
       display: flex;
       border: 0;
-      background: #fff;
+      background: #ffffff;
       padding: 0;
       margin-right: 20px;
       z-index: 2;
@@ -81,7 +82,7 @@ export const Content = styled.div`
   }
 
   .open nav {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dddddd;
     padding-bottom: 10px;
     margin-bottom: 10px;
     padding-left: 20px;

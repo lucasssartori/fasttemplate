@@ -8,12 +8,15 @@ export const Container = styled.div`
 `;
 
 export const HeaderPage = styled.div`
-  width: 900px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 900px;
   margin-bottom: 20px;
 
   h1 {
+    font-weight: normal;
+    font-size: 18px;
     color: #03022e;
   }
 
@@ -25,6 +28,7 @@ export const HeaderPage = styled.div`
 
 export const BackButton = styled(Button)`
   width: 112px;
+  height: 36px;
   padding: 0 15px;
   margin-right: 16px;
   background: #cccccc;
@@ -32,6 +36,7 @@ export const BackButton = styled(Button)`
 
 export const SaveButton = styled(Button)`
   width: 112px;
+  height: 36px;
   padding: 0 15px;
   background: #6b9f60;
 `;

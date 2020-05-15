@@ -6,7 +6,8 @@ import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import JobsList from '~/pages/JobControl/List';
 import JobsStore from '~/pages/JobControl/Form';
-import Transmisson from '~/pages/JobControl/Transmission/List';
+import TransmissonList from '~/pages/JobControl/Transmission/List';
+import TransmissonStore from '~/pages/JobControl/Transmission/Form';
 import HistoryList from '~/pages/History/List';
 
 export default function Routes() {
@@ -19,7 +20,21 @@ export default function Routes() {
       <Route path="/jobs/store" component={JobsStore} isPrivate />
       <Route path="/jobs/update/:id" component={JobsStore} isPrivate />
 
-      <Route path="/transmission/list/:id" component={Transmisson} isPrivate />
+      <Route
+        path="/transmission/list/:id"
+        component={TransmissonList}
+        isPrivate
+      />
+      <Route
+        path="/transmission/store/:jobid"
+        component={TransmissonStore}
+        isPrivate
+      />
+      <Route
+        path="/transmission/update/:id"
+        component={TransmissonStore}
+        isPrivate
+      />
 
       <Route path="/history/list" component={HistoryList} isPrivate />
     </Switch>

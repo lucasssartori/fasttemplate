@@ -50,7 +50,7 @@ export default function Header() {
       <Content>
         <DivLogo>
           <Link to="/">
-            <MdDescription color="#fff" size={30} />
+            <MdDescription color="#ffffff" size={30} />
           </Link>
         </DivLogo>
         <button type="button" className="menu" onClick={() => handleMenu()}>
@@ -66,7 +66,10 @@ export default function Header() {
                   }}
                   to="/jobs/list"
                   isActive={(match, location) => {
-                    if (location.pathname.indexOf('/jobs/') !== -1) {
+                    if (
+                      location.pathname.indexOf('/jobs/') !== -1 ||
+                      location.pathname.indexOf('/transmission/') !== -1
+                    ) {
                       return true;
                     }
                     return false;

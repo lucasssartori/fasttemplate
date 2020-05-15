@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { Form } from '@unform/web';
 import { toast } from 'react-toastify';
 import { MdAdd, MdSearch, MdClear } from 'react-icons/md';
 import { confirmAlert } from 'react-confirm-alert';
 
+import { signOut } from '~/store/modules/auth/actions';
 import api from '~/services/api';
 import history from '~/services/history';
 import Pagination from '~/components/Pagination';
@@ -35,6 +37,8 @@ function JobControlList() {
   const [name = '', setName] = useState();
   const [page = 1, setPage] = useState();
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const loadJobs = useCallback(() => {
     async function load() {
@@ -68,11 +72,16 @@ function JobControlList() {
       } catch (error) {
         setJobs([]);
         setLoading(false);
-        toast.warn(error.response.data.error);
+
+        if (error.response.status === 401) {
+          dispatch(signOut());
+        } else {
+          toast.error(error.response.data.error);
+        }
       }
     }
     load();
-  }, [page, name]);
+  }, [page, name, dispatch]);
 
   useEffect(() => {
     loadJobs();

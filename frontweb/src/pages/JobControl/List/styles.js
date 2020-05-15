@@ -13,6 +13,8 @@ export const Content = styled.div`
   margin-bottom: 25px;
 
   h1 {
+    font-weight: normal;
+    font-size: 18px;
     color: #03022e;
   }
 
@@ -63,14 +65,14 @@ export const Table = styled.div`
   width: 100%;
   max-width: 1200px;
   strong {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
     color: #444444;
   }
 `;
 
 export const TextTable = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
   color: #666666;
 `;
@@ -104,7 +106,7 @@ export const TableRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 57px;
+  height: 45px;
   margin-bottom: 15px;
   padding: 0 25px;
   border-radius: 5px;

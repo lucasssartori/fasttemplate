@@ -1,9 +1,19 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { MdArrowBack, MdSave } from 'react-icons/md';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+
+import { signOut } from '~/store/modules/auth/actions';
+import api from '~/services/api';
+import history from '~/services/history';
+import Input from '~/components/SimpleInput';
+import TextArea from '~/components/TextArea';
+import Select from '~/components/ReactSelect';
+import ObjetcEqual from '~/util/ObjetcEqual';
+import Systems from '~/enums/EnumSystems';
 
 import {
   Container,
@@ -15,22 +25,16 @@ import {
   DivDescription,
   Mensagem,
 } from './styles';
-import Input from '~/components/SimpleInput';
-import TextArea from '~/components/TextArea';
-import Select from '~/components/ReactSelect';
-import ObjetcEqual from '~/util/ObjetcEqual';
-import Systems from '~/enums/EnumSystems';
-
-import api from '~/services/api';
-import history from '~/services/history';
 
 function JobControlForm() {
   const formRef = useRef(null);
 
   const { id } = useParams();
-  const [titleForm, setTitle] = useState();
-  const [job, setJob] = useState();
+  const [titleForm, setTitle] = useState('');
+  const [job, setJob] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadJobs() {
@@ -56,11 +60,15 @@ function JobControlForm() {
           setTitle('Cadastro de Job');
         }
       } catch (error) {
-        setTitle('Cadastro de Job');
+        if (error.response.status === 401) {
+          dispatch(signOut());
+        } else {
+          toast.error(error.response.data.error);
+        }
       }
     }
     loadJobs();
-  }, [id]);
+  }, [id, dispatch]);
 
   async function handleSubmitAdd(data) {
     const aux_job = job;

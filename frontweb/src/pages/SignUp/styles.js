@@ -19,7 +19,7 @@ export const Form = styled(Unform)`
   input {
     height: 45px;
     background: #ffffff;
-    border: 1px solid ${Colors.BorderColor};
+    border: 1px solid #dddddd;
     box-sizing: border-box;
     border-radius: 4px;
     margin-bottom: 20px;
@@ -33,7 +33,7 @@ export const Form = styled(Unform)`
 
 export const SighInButton = styled(Button)`
   height: 45px;
-  background: ${Colors.ButtomGreen};
+  background: ${Colors.Green};
   border-radius: 4px;
   font-size: 16px;
   color: #ffffff;
@@ -41,7 +41,7 @@ export const SighInButton = styled(Button)`
   transition: background 0.2s;
 
   &:hover {
-    background: ${lighten(0.18, Colors.ButtomGreen)};
+    background: ${lighten(0.18, Colors.Green)};
   }
 `;
 

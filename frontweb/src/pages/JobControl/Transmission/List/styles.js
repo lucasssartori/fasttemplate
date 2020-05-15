@@ -1,10 +1,25 @@
 import styled from 'styled-components';
-
+import { lighten } from 'polished';
 import Button from '~/components/Button';
 
 export const Container = styled.div`
   width: 900px;
   margin: 20px auto;
+`;
+
+export const Mensagem = styled.div`
+  width: auto;
+  margin-top: 20px;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  border-radius: 5px;
+  background: #fff;
+  h1 {
+    font-size: 15px;
+    color: #666666;
+  }
 `;
 
 export const HeaderPage = styled.div`
@@ -17,9 +32,12 @@ export const HeaderPage = styled.div`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 900px;
 
   h1 {
+    font-weight: normal;
+    font-size: 18px;
     color: #03022e;
   }
 
@@ -43,17 +61,17 @@ export const DivLabel = styled.div`
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #dddddd;
+  background: #eeeeee;
   margin: 10px;
 
-  label {
+  strong {
     font-size: 12px;
     line-height: 19px;
-    font-weight: bold;
-    color: #999999;
+    color: #03022e;
   }
 
   p {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 19px;
     margin-left: 5px;
     color: #444444;
@@ -65,29 +83,32 @@ export const DivNameSystem = styled.div`
   flex-direction: row;
 `;
 
-export const Mensagem = styled.div`
-  width: auto;
-  margin-top: 20px;
-  max-width: 1200px;
+export const DivHead = styled.label`
   display: flex;
+  flex: 1;
   align-items: center;
-  padding: 25px;
+  justify-content: center;
   border-radius: 5px;
-  background: #fff;
-  h1 {
-    font-size: 15px;
-    color: #666666;
+  background: #003344;
+  padding: 6px 0px;
+  margin: 10px;
+  box-shadow: 5px 5px 5px #bbbbbb;
+
+  h3 {
+    font-size: 14px;
+    color: #fab000;
   }
 `;
 
 export const BackButton = styled(Button)`
-  width: 112px;
+  height: 36px;
   padding: 0 15px;
   margin-right: 16px;
   background: #cccccc;
 `;
 
 export const TransmissionButton = styled(Button)`
+  height: 36px;
   padding: 0 15px;
   background: #0040ff;
 `;

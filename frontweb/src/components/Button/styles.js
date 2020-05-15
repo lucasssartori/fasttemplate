@@ -22,7 +22,7 @@ export const Container = styled.button.attrs((props) => ({
   font-weight: 400;
   font-size: 14px;
   border: 0;
-
+  box-shadow: 4px 4px 4px #bbb;
   div {
     display: flex;
     justify-content: space-between;
@@ -38,6 +38,10 @@ export const Container = styled.button.attrs((props) => ({
     justify-content: center;
     cursor: not-allowed;
     opacity: 0.6;
+  }
+
+  &:active {
+    box-shadow: none;
   }
 
   ${(props) =>
