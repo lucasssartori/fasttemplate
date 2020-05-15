@@ -15,6 +15,7 @@ import {
   Mensagem,
   DivHead,
   DivButons,
+  DivActions,
   OpenButton,
   CloseBotton,
 } from './styles';
@@ -99,14 +100,19 @@ function TransmissionList({ transmissios, setTransmissios }) {
     transmissios.map((item) => (
       <DataTransmission key={item.id} in={item.checked} collapsedHeight={240}>
         <DivButons>
-          <Actions
-            Edit={() => history.push(`/transmission/update/${item.id}`)}
-            Delete={() => confirmDelete(item)}
-          />
           {item.checked ? (
-            <CloseBotton type="button" onClick={() => handleChange(item.index)}>
-              <MdRemove color="#fff" size={16} />
-            </CloseBotton>
+            <DivActions>
+              <Actions
+                Edit={() => history.push(`/transmission/update/${item.id}`)}
+                Delete={() => confirmDelete(item)}
+              />
+              <CloseBotton
+                type="button"
+                onClick={() => handleChange(item.index)}
+              >
+                <MdRemove color="#fff" size={16} />
+              </CloseBotton>
+            </DivActions>
           ) : (
             <OpenButton type="button" onClick={() => handleChange(item.index)}>
               <MdAdd color="#fff" size={16} />

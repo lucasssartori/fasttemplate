@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { lighten } from 'polished';
 import Button from '~/components/Button';
+
+import Colors from '~/components/Colors';
 
 export const Container = styled.div`
   width: 900px;
@@ -89,15 +90,22 @@ export const DivHead = styled.label`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  background: #003344;
+  background: ${Colors.PrimaryColor};
   padding: 6px 0px;
   margin: 10px;
   box-shadow: 5px 5px 5px #bbbbbb;
 
   h3 {
     font-size: 14px;
-    color: #fab000;
+    color: #dddddd;
   }
+`;
+
+export const AddButton = styled(Button)`
+  margin-right: 16px;
+  height: 36px;
+  padding: 0px 15px;
+  background: #6b9f60;
 `;
 
 export const BackButton = styled(Button)`

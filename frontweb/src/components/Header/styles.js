@@ -118,25 +118,26 @@ export const Content = styled.div`
 
     p {
       font-weight: normal;
-      font-size: 12px;
+      font-size: 13px;
       color: #eeeeee;
     }
 
     button {
       margin-top: 4px;
+      padding: 0px 10px;
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 0;
-      background: transparent;
-      padding: 0;
+      border: 2px solid #ee4d64;
+      border-radius: 2px;
+      background: #ee4d64;
 
       p {
         margin-right: 4px;
         font-weight: normal;
         font-size: 12px;
         text-align: right;
-        color: #fab000;
+        color: #fff;
       }
     }
 

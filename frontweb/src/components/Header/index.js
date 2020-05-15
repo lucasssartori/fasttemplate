@@ -102,7 +102,7 @@ export default function Header() {
             <p>{name}</p>
             <button type="button" onClick={handleSignOut}>
               <p>Sair</p>
-              <GoSignOut color="#fab000" size={12} />
+              <GoSignOut color="#fff" size={12} />
             </button>
           </aside>
         </div>

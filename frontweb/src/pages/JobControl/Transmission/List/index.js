@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { MdArrowBack, MdDescription } from 'react-icons/md';
+import { MdArrowBack, MdDescription, MdAdd } from 'react-icons/md';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -18,6 +18,7 @@ import {
   DivNameSystem,
   DivLabel,
   Mensagem,
+  AddButton,
   BackButton,
   TransmissionButton,
 } from './styles';
@@ -84,7 +85,7 @@ function TransmissionList() {
           </Mensagem>
         </HeaderPage>
       ) : (
-        <>
+        <div>
           <HeaderPage>
             <Header>
               <h1>Gerenciando Transmissões de Job</h1>
@@ -95,6 +96,15 @@ function TransmissionList() {
                   type="button"
                   onClick={() => {
                     history.push('/jobs/list');
+                  }}
+                />
+                <AddButton
+                  title="CADASTRAR"
+                  loading={loading}
+                  IconButton={MdAdd}
+                  type="button"
+                  onClick={() => {
+                    history.push(`/transmission/store/${job.id}`);
                   }}
                 />
                 <TransmissionButton
@@ -130,7 +140,7 @@ function TransmissionList() {
             transmissios={transmissios}
             setTransmissios={setTransmissios}
           />
-        </>
+        </div>
       )}
     </Container>
   );

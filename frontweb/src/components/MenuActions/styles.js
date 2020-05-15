@@ -21,6 +21,7 @@ export const ActionsMenu = styled.div`
   padding: 15px 10px;
   display: ${(props) => (props.visible ? 'block' : 'none')};
   z-index: 1;
+  box-shadow: 5px 5px 15px #bbbbbb;
 
   &::before {
     content: '';

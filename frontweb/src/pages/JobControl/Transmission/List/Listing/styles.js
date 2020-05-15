@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Collapse } from '@material-ui/core';
 import { lighten } from 'polished';
 
+import Colors from '~/components/Colors';
+
 export const Mensagem = styled.div`
   width: auto;
   margin-top: 20px;
@@ -18,6 +20,7 @@ export const Mensagem = styled.div`
 `;
 
 export const DataTransmission = styled(Collapse)`
+  width: 900px;
   margin-top: 25px;
   padding: 15px;
   border-radius: 5px;
@@ -28,6 +31,10 @@ export const DataTransmission = styled(Collapse)`
 export const DivButons = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
+
+export const DivActions = styled.div`
+  display: flex;
 `;
 
 export const OpenButton = styled.button`
@@ -52,6 +59,7 @@ export const CloseBotton = styled.button`
   align-items: center;
   justify-content: center;
   padding: 3px;
+  margin-left: 5px;
   border: 0;
   border-radius: 3px;
   background: #ee4d64;
@@ -97,13 +105,13 @@ export const DivHead = styled.label`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  background: #003344;
+  background: ${Colors.PrimaryColor};
   padding: 6px 0px;
   margin: 10px;
   box-shadow: 5px 5px 5px #bbbbbb;
 
   h3 {
     font-size: 14px;
-    color: #fab000;
+    color: #dddddd;
   }
 `;
