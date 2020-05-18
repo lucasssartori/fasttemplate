@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
 
   label {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 19px;
     font-weight: bold;
     margin-bottom: 8px;

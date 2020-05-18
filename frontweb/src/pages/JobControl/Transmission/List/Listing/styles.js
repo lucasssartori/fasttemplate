@@ -74,7 +74,7 @@ export const SourseDestiny = styled.div`
   flex-direction: row;
 `;
 
-export const DivLabel = styled.label`
+export const DivLabel = styled.div`
   display: flex;
   flex: 3;
   align-items: center;
@@ -91,9 +91,10 @@ export const DivLabel = styled.label`
     color: #444444;
   }
 `;
+
 export const LabelData = styled.h6`
   text-justify: center;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 19px;
   margin-left: 12px;
   color: #444444;

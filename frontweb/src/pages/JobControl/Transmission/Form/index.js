@@ -10,7 +10,6 @@ import { signOut } from '~/store/modules/auth/actions';
 import api from '~/services/api';
 import history from '~/services/history';
 import Input from '~/components/SimpleInput';
-import TextArea from '~/components/TextArea';
 import Select from '~/components/ReactSelect';
 import ObjetcEqual from '~/util/ObjetcEqual';
 import Technologies from '~/enums/EnumTechnologies';
@@ -21,9 +20,10 @@ import {
   BackButton,
   SaveButton,
   ContentForm,
-  DivData,
-  DivDescription,
   Mensagem,
+  DivData,
+  DivHead,
+  DivFild,
 } from './styles';
 
 function TransmissionForm() {
@@ -149,14 +149,14 @@ function TransmissionForm() {
             IconButton={MdArrowBack}
             type="button"
             onClick={() => {
-              history.push('/jobs/list');
+              history.push(`/transmission/list/${jobid}`);
             }}
           />
           <SaveButton
             title="SALVAR"
             IconButton={MdSave}
             type="submit"
-            form="job"
+            form="transmission"
           />
         </div>
       </HeaderPage>
@@ -167,35 +167,85 @@ function TransmissionForm() {
       ) : (
         <ContentForm>
           <Form
-            initialData={job}
+            initialData={transmission}
             ref={formRef}
-            id="job"
+            id="transmission"
             onSubmit={handleSubmitAdd}
           >
             <DivData>
-              <div>
-                <Input
-                  label="Nome do Job"
-                  name="name"
-                  placeholder="Informe o nome do Job"
-                />
-              </div>
-              <div>
-                <Select
-                  label="Sistema"
-                  name="system"
-                  options={Systems}
-                  placeholder="Informe o sistema"
-                />
-              </div>
+              <DivHead>
+                <h3>Origem</h3>
+              </DivHead>
+              <DivHead>
+                <h3>Destino</h3>
+              </DivHead>
             </DivData>
-            <DivDescription>
-              <TextArea
-                label="Descrição do Job"
-                name="description"
-                placeholder="Informe uma descrição para o Job"
-              />
-            </DivDescription>
+            <DivData>
+              <DivFild>
+                <Select
+                  label="1 – Forma de envio"
+                  name="tech_in"
+                  options={Technologies}
+                  placeholder="CONNETC"
+                />
+              </DivFild>
+              <DivFild>
+                <Select
+                  label="1 – Forma de envio"
+                  name="tech_for"
+                  options={Technologies}
+                  placeholder="CONNETC"
+                />
+              </DivFild>
+            </DivData>
+            <DivData>
+              <DivFild>
+                <Input
+                  label="2 – Servidor (ambiente/Nome/IP)"
+                  name="server_in"
+                  placeholder="Mainframe MG - RJ - BA - PE"
+                />
+              </DivFild>
+              <DivFild>
+                <Input
+                  label="2 – Servidor (ambiente/Nome/IP)"
+                  name="server_for"
+                  placeholder="Mainframe MG - RJ - BA - PE"
+                />
+              </DivFild>
+            </DivData>
+            <DivData>
+              <DivFild>
+                <Input
+                  label="3 – Caminho / PATH (Diretório / FS / Data Set, etc)"
+                  name="directory_in"
+                  placeholder="Mainframe MG - RJ - BA - PE"
+                />
+              </DivFild>
+              <DivFild>
+                <Input
+                  label="3 – Caminho / PATH (Diretório / FS / Data Set, etc)"
+                  name="directory_for"
+                  placeholder="Mainframe MG - RJ - BA - PE"
+                />
+              </DivFild>
+            </DivData>
+            <DivData>
+              <DivFild>
+                <Input
+                  label="4 – Usuário executor do Processo Control-M(Ambiente Distribuído)"
+                  name="directory_in"
+                  placeholder="Mainframe MG - RJ - BA - PE"
+                />
+              </DivFild>
+              <DivFild>
+                <Input
+                  label="4 – Usuário executor do Processo Control-M(Ambiente Distribuído)"
+                  name="directory_for"
+                  placeholder="Mainframe MG - RJ - BA - PE"
+                />
+              </DivFild>
+            </DivData>
           </Form>
         </ContentForm>
       )}

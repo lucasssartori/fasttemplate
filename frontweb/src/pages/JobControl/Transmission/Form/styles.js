@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import Button from '~/components/Button';
+import Colors from '~/components/Colors';
 
 export const Container = styled.div`
   width: 900px;
@@ -48,21 +49,39 @@ export const ContentForm = styled.div`
   padding: 26px 30px;
 `;
 
+export const SourseDestiny = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const DivData = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+`;
 
-  > div {
-    flex: 1;
-    width: 100%;
-    max-width: 405px;
+export const DivHead = styled.div`
+  width: 100%;
+  max-width: 405px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background: ${Colors.PrimaryColor};
+  padding: 6px 0px;
+  box-shadow: 5px 5px 5px #bbbbbb;
+
+  h3 {
+    font-size: 14px;
+    color: #dddddd;
   }
 `;
 
-export const DivDescription = styled.div`
-  display: flex;
-  flex-direction: column;
+export const DivFild = styled.div`
+  flex: 1;
+  width: 100%;
+  max-width: 405px;
 `;
 
 export const Mensagem = styled.div`
