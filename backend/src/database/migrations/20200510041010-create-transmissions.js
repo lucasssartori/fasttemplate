@@ -82,7 +82,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      solution_agentfor: {
+      solution_agent_for: {
         type: Sequelize.STRING,
         allowNull: true,
       },

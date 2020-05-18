@@ -21,7 +21,7 @@ class Transmission extends Model {
         application_in: Sequelize.STRING,
         application_for: Sequelize.STRING,
         solution_agent_in: Sequelize.STRING,
-        solution_agentfor: Sequelize.STRING,
+        solution_agent_for: Sequelize.STRING,
         process_in: Sequelize.STRING,
         process_for: Sequelize.STRING,
       },

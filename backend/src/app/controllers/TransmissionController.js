@@ -26,7 +26,7 @@ class TransmissionController {
       application_in: Yup.string().required(),
       application_for: Yup.string().required(),
       solution_agent_in: Yup.string().required(),
-      solution_agentfor: Yup.string().required(),
+      solution_agent_for: Yup.string().required(),
       process_in: Yup.string().required(),
       process_for: Yup.string().required(),
     });
@@ -78,7 +78,7 @@ class TransmissionController {
       application_in: Yup.string(),
       application_for: Yup.string(),
       solution_agent_in: Yup.string(),
-      solution_agentfor: Yup.string(),
+      solution_agent_for: Yup.string(),
       process_in: Yup.string(),
       process_for: Yup.string(),
     });
