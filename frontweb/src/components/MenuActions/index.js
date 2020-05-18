@@ -85,7 +85,7 @@ export default function MenuActions({
           {Transmission && (
             <ActionMenu onClick={handleTransmisão}>
               <MdSwapHoriz size={18} color="#8E5BE8" />
-              <p>Transmisão</p>
+              <p>Transmissão</p>
             </ActionMenu>
           )}
         </ListActions>

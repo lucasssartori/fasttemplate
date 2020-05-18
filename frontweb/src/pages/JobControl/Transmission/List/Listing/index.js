@@ -36,6 +36,7 @@ function TransmissionList({ transmissios, setTransmissios }) {
       }
     }
     load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (index) => {
@@ -53,19 +54,20 @@ function TransmissionList({ transmissios, setTransmissios }) {
     try {
       await api.delete(`transmissions/${aux_transmisao.id}`);
       toast.success('Transmissão excluida com sucesso!');
-      setTransmissios();
+
+      const aux = transmissios.filter(
+        (item) => item.index !== aux_transmisao.index
+      );
 
       setTransmissios(
-        transmissios.filter((item, index) => {
-          if (item.index !== aux_transmisao.index) {
-            delete item.checked;
-            delete item.index;
-            return {
-              ...item,
-              checked: false,
-              index,
-            };
-          }
+        aux.map((item, index) => {
+          delete item.checked;
+          delete item.index;
+          return {
+            ...item,
+            checked: false,
+            index,
+          };
         })
       );
     } catch (error) {

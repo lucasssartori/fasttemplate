@@ -26,7 +26,7 @@ export default function Routes() {
         isPrivate
       />
       <Route
-        path="/transmission/store/:jobid"
+        path="/transmission/store/:job_id"
         component={TransmissonStore}
         isPrivate
       />

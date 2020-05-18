@@ -29,7 +29,7 @@ import {
 function TransmissionForm() {
   const formRef = useRef(null);
 
-  const { id, jobid } = useParams();
+  const { id, job_id } = useParams();
   const [titleForm, setTitle] = useState('');
   const [transmission, setTransmission] = useState({});
   const [loading, setLoading] = useState(false);
@@ -42,34 +42,29 @@ function TransmissionForm() {
         if (id) {
           setLoading(true);
           setTitle('Edição de Transmissão');
+
           const response = await api.get(`transmissions/${id}`);
 
           const data = response.data.transmission;
+
           const aux_tech_in = Technologies.find(
             (option) => option.value === data.tech_in
           );
           const aux_tech_for = Technologies.find(
-            (option) => option.value === data.aux_tech_for
+            (option) => option.value === data.tech_for
           );
 
-          setTransmission(
-            data.map((item) => {
-              delete item.tech_in;
-              delete item.tech_for;
-              return {
-                ...item,
-                tech_in: aux_tech_in.value,
-                tech_for: aux_tech_for.value,
-              };
-            })
-          );
+          const tech_in = aux_tech_in.value;
+          const tech_for = aux_tech_for.value;
+
+          setTransmission(data, tech_in, tech_for);
 
           setLoading(false);
         } else {
           setTitle('Cadastro de Transmissão');
         }
       } catch (error) {
-        if (error.response.status === 401) {
+        if (error.response.status && error.response.status === 401) {
           dispatch(signOut());
         } else {
           toast.error(error.response.data.error);
@@ -91,40 +86,109 @@ function TransmissionForm() {
     try {
       formRef.current.setErrors({});
       const schema = Yup.object().shape({
-        name: Yup.string()
-          .min(8, 'Nome deve possuir 8 caracteres')
-          .max(8, 'Nome deve possuir 8 caracteres')
-          .required('O nome é obrigatório'),
-        system: Yup.string()
-          .required('O sistema é obrigatório')
-          .typeError('Sistema inválido'),
-        description: Yup.string().required('A descrição é obrigatória'),
+        tech_in: Yup.string().required('Campo é obrigatório'),
+        tech_for: Yup.string().required('Campo é obrigatório'),
+        server_in: Yup.string().required('Campo é obrigatório'),
+        server_for: Yup.string().required('Campo é obrigatório'),
+        directory_in: Yup.string().required('Campo é obrigatório'),
+        directory_for: Yup.string().required('Campo é obrigatório'),
+        user_in: Yup.string().required('Campo é obrigatório'),
+        user_for: Yup.string().required('Campo é obrigatório'),
+        mask_archive_in: Yup.string().required('Campo é obrigatório'),
+        mask_archive_for: Yup.string().required('Campo é obrigatório'),
+        size_register_in: Yup.string().required('Campo é obrigatório'),
+        size_register_for: Yup.string().required('Campo é obrigatório'),
+        node_in: Yup.string().required('Campo é obrigatório'),
+        node_for: Yup.string().required('Campo é obrigatório'),
+        application_in: Yup.string().required('Campo é obrigatório'),
+        application_for: Yup.string().required('Campo é obrigatório'),
+        solution_agent_in: Yup.string().required('Campo é obrigatório'),
+        solution_agent_for: Yup.string().required('Campo é obrigatório'),
+        process_in: Yup.string().required('Campo é obrigatório'),
+        process_for: Yup.string().required('Campo é obrigatório'),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
 
-      const { name, system, description } = data;
+      const {
+        tech_in,
+        tech_for,
+        server_in,
+        server_for,
+        directory_in,
+        directory_for,
+        user_in,
+        user_for,
+        mask_archive_in,
+        mask_archive_for,
+        size_register_in,
+        size_register_for,
+        node_in,
+        node_for,
+        application_in,
+        application_for,
+        solution_agent_in,
+        solution_agent_for,
+        process_in,
+        process_for,
+      } = data;
 
       if (id) {
-        await api.put(`jobs/${id}`, {
-          name: name.toUpperCase(),
-          system,
-          description,
+        await api.put(`transmissions/${id}`, {
+          job_id: transmission.job_id,
+          tech_in,
+          tech_for,
+          server_in,
+          server_for,
+          directory_in,
+          directory_for,
+          user_in,
+          user_for,
+          mask_archive_in,
+          mask_archive_for,
+          size_register_in,
+          size_register_for,
+          node_in,
+          node_for,
+          application_in,
+          application_for,
+          solution_agent_in,
+          solution_agent_for,
+          process_in,
+          process_for,
         });
 
-        toast.success('Job atualizado com sucesso!');
-        history.push('/jobs/list');
+        toast.success('Transmissão atualizado com sucesso!');
+        history.goBack();
       } else {
-        await api.post('jobs', {
-          name: name.toUpperCase(),
-          system,
-          description,
+        await api.post('transmissions', {
+          job_id,
+          tech_in,
+          tech_for,
+          server_in,
+          server_for,
+          directory_in,
+          directory_for,
+          user_in,
+          user_for,
+          mask_archive_in,
+          mask_archive_for,
+          size_register_in,
+          size_register_for,
+          node_in,
+          node_for,
+          application_in,
+          application_for,
+          solution_agent_in,
+          solution_agent_for,
+          process_in,
+          process_for,
         });
 
-        toast.success('Job cadastrado com sucesso!');
-        history.push('/jobs/list');
+        toast.success('Transmissão cadastrada com sucesso!');
+        history.goBack();
       }
     } catch (errors) {
       const validationErrors = {};
@@ -149,7 +213,7 @@ function TransmissionForm() {
             IconButton={MdArrowBack}
             type="button"
             onClick={() => {
-              history.push(`/transmission/list/${jobid}`);
+              history.goBack();
             }}
           />
           <SaveButton
@@ -162,7 +226,7 @@ function TransmissionForm() {
       </HeaderPage>
       {loading ? (
         <Mensagem>
-          <h1>Carregando Job...</h1>
+          <h1>Carregando Transmissão...</h1>
         </Mensagem>
       ) : (
         <ContentForm>
@@ -203,14 +267,14 @@ function TransmissionForm() {
                 <Input
                   label="2 – Servidor (ambiente/Nome/IP)"
                   name="server_in"
-                  placeholder="Mainframe MG - RJ - BA - PE"
+                  placeholder="Mainframe MG"
                 />
               </DivFild>
               <DivFild>
                 <Input
                   label="2 – Servidor (ambiente/Nome/IP)"
                   name="server_for"
-                  placeholder="Mainframe MG - RJ - BA - PE"
+                  placeholder="SERPW01"
                 />
               </DivFild>
             </DivData>
@@ -219,14 +283,14 @@ function TransmissionForm() {
                 <Input
                   label="3 – Caminho / PATH (Diretório / FS / Data Set, etc)"
                   name="directory_in"
-                  placeholder="Mainframe MG - RJ - BA - PE"
+                  placeholder="N/A"
                 />
               </DivFild>
               <DivFild>
                 <Input
                   label="3 – Caminho / PATH (Diretório / FS / Data Set, etc)"
                   name="directory_for"
-                  placeholder="Mainframe MG - RJ - BA - PE"
+                  placeholder="/USXXX/STC/MIGRADOR"
                 />
               </DivFild>
             </DivData>
@@ -234,15 +298,111 @@ function TransmissionForm() {
               <DivFild>
                 <Input
                   label="4 – Usuário executor do Processo Control-M(Ambiente Distribuído)"
-                  name="directory_in"
-                  placeholder="Mainframe MG - RJ - BA - PE"
+                  name="user_in"
+                  placeholder="CDTLMMG"
                 />
               </DivFild>
               <DivFild>
                 <Input
                   label="4 – Usuário executor do Processo Control-M(Ambiente Distribuído)"
-                  name="directory_for"
-                  placeholder="Mainframe MG - RJ - BA - PE"
+                  name="user_for"
+                  placeholder="CDTLMMG"
+                />
+              </DivFild>
+            </DivData>
+            <DivData>
+              <DivFild>
+                <Input
+                  label="5 – Máscara do arquivo"
+                  name="mask_archive_in"
+                  placeholder="#TC0.A001D.DXXX.CGSXXXXX.FINAL.D&DT"
+                />
+              </DivFild>
+              <DivFild>
+                <Input
+                  label="5 – Máscara do arquivo"
+                  name="mask_archive_for"
+                  placeholder="EXTRATOR-XXXXXXXXX-R1-DDMMAA.TXT"
+                />
+              </DivFild>
+            </DivData>
+            <DivData>
+              <DivFild>
+                <Input
+                  label="6 – Tam. Registro / DCB / ???CYL"
+                  name="size_register_in"
+                  placeholder="LRECL=200"
+                />
+              </DivFild>
+              <DivFild>
+                <Input
+                  label="6 – Tam. Registro / DCB / ???CYL"
+                  name="size_register_for"
+                  placeholder="200 bytes"
+                />
+              </DivFild>
+            </DivData>
+            <DivData>
+              <DivFild>
+                <Input
+                  label="7 – Identificação:Node (Connect) / Site (Pelican)"
+                  name="node_in"
+                  placeholder="TLMMG"
+                />
+              </DivFild>
+              <DivFild>
+                <Input
+                  label="7 – Identificação:Node (Connect) / Site (Pelican)"
+                  name="node_for"
+                  placeholder="N/A"
+                />
+              </DivFild>
+            </DivData>
+            <DivData>
+              <DivFild>
+                <Input
+                  label="8 - Aplicação(XFB) / Process Name (CD)"
+                  name="application_in"
+                  placeholder="#TC0S0XX"
+                />
+              </DivFild>
+              <DivFild>
+                <Input
+                  label="8 - Aplicação(XFB) / Process Name (CD)"
+                  name="application_for"
+                  placeholder="#TC0S0XX"
+                />
+              </DivFild>
+            </DivData>
+            <DivData>
+              <DivFild>
+                <Input
+                  label="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
+                  name="solution_agent_in"
+                  placeholder="OP_STCVOZ_N2_ACC"
+                />
+              </DivFild>
+              <DivFild>
+                <Input
+                  label="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
+                  name="solution_agent_for"
+                  placeholder="OP_STCVOZ_N2_ACC"
+                />
+              </DivFild>
+            </DivData>
+            <DivData>
+              <DivFild>
+                <Input
+                  label="10 – Aplicação do processo"
+                  name="process_in"
+                  placeholder="STC"
+                />
+              </DivFild>
+              <DivFild>
+                <Input
+                  label="10 – Aplicação do processo"
+                  name="process_for"
+                  placeholder="USUÁRIO"
                 />
               </DivFild>
             </DivData>
