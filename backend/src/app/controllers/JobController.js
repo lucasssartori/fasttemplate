@@ -3,6 +3,7 @@ import { Op } from 'sequelize';
 
 import Job from '../models/Job';
 import Systems from './enums/EnumSystems';
+import ParseTransmissionController from './ParseTransmissionController';
 
 class JobController {
   async store(req, res) {
@@ -33,9 +34,13 @@ class JobController {
       return res.status(400).json({ error: 'Sistema informado inválido.' });
     }
 
-    await Job.create(req.body);
+    const { id } = await Job.create(req.body);
+
+    const parse = new ParseTransmissionController(name);
+    parse.parseTransmission();
 
     return res.json({
+      id,
       name,
       system,
       description,
