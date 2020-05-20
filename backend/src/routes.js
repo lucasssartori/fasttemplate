@@ -6,6 +6,8 @@ import JobController from './app/controllers/JobController';
 import TransmissionController from './app/controllers/TransmissionController';
 import TransmissionTemplateController from './app/controllers/TransmissionTemplateController';
 
+import ParseTransmissionController from './app/controllers/ParseTransmissionController';
+
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
@@ -13,11 +15,16 @@ const routes = new Router();
 routes.post('/sessions', SessionController.store);
 
 routes.post('/users', UserController.store);
-routes.get('/transmissionstemplate/:id', TransmissionTemplateController.index);
+
 // ---------------------------------------------------------------------------------
 // Rotas com autenticação de Token
 // ---------------------------------------------------------------------------------
 routes.use(authMiddleware);
+// ---------------------------------------------------------------------------------
+// Teste
+// ---------------------------------------------------------------------------------
+
+routes.post('/parse', ParseTransmissionController.store);
 
 // ---------------------------------------------------------------------------------
 // Rotas de usuário
@@ -47,5 +54,6 @@ routes.get('/transmissionsjobs/:id', TransmissionController.index);
 // ---------------------------------------------------------------------------------
 // Gera documentos
 // ---------------------------------------------------------------------------------
+routes.get('/transmissionstemplate/:id', TransmissionTemplateController.index);
 
 export default routes;
