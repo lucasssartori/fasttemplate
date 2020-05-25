@@ -77,6 +77,7 @@ export const SourseDestiny = styled.div`
 export const DivLabel = styled.div`
   display: flex;
   flex: 3;
+  height: 30px;
   align-items: center;
   padding: 3px;
   border-radius: 5px;
