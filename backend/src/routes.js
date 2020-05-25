@@ -6,25 +6,27 @@ import JobController from './app/controllers/JobController';
 import TransmissionController from './app/controllers/TransmissionController';
 import TransmissionTemplateController from './app/controllers/TransmissionTemplateController';
 
-import ParseTransmissionController from './app/controllers/ParseTransmissionController';
+import ParseTeste from './app/controllers/ParseTeste';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 
-routes.post('/sessions', SessionController.store);
+// ---------------------------------------------------------------------------------
+// Teste de funcionalidade
+// ---------------------------------------------------------------------------------
+routes.post('/parse', ParseTeste.store);
 
+// ---------------------------------------------------------------------------------
+// User
+// ---------------------------------------------------------------------------------
+routes.post('/sessions', SessionController.store);
 routes.post('/users', UserController.store);
 
 // ---------------------------------------------------------------------------------
 // Rotas com autenticação de Token
 // ---------------------------------------------------------------------------------
 routes.use(authMiddleware);
-// ---------------------------------------------------------------------------------
-// Teste
-// ---------------------------------------------------------------------------------
-
-routes.post('/parse', ParseTransmissionController.store);
 
 // ---------------------------------------------------------------------------------
 // Rotas de usuário

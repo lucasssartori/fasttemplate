@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { Op } from 'sequelize';
 
 import Job from '../models/Job';
+import Transmission from '../models/Transmission';
 import Systems from './enums/EnumSystems';
 import ParseTransmissionController from './ParseTransmissionController';
 
@@ -37,7 +38,12 @@ class JobController {
     const { id } = await Job.create(req.body);
 
     const parse = new ParseTransmissionController(name);
-    parse.parseTransmission();
+    const transmissions = parse.parseTransmission();
+
+    transmissions.map(async (transmission) => {
+      transmission.job_id = id;
+      await Transmission.create(transmission);
+    });
 
     return res.json({
       id,

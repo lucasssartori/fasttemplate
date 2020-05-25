@@ -1,158 +1,198 @@
 import fs from 'fs';
 
-class ParseTransmissionController {
-  /*
-  constructor(nome_job, id_job) {
-    this.nome_job = nome_job;
-    this.id_job = id_job;
+export default class ParseTransmissionController {
+  constructor(name) {
+    this.name = name;
+    this.transmissions = [];
   }
 
   parseTransmission() {
-
-  */
-
-  async store(req, res) {
-    const { name } = req.body;
-
     const sigla_ambientes = ['U', 'H', 'N', 'R'];
-    const transmissions = [];
 
-    function Parse(job_name) {
-      fs.readFile(
-        `Z:\\COPERNIC_PASTAS_INDICE\\01. Fontes Dimensions R1\\PRODUCAO_JCL\\${job_name}.txt`,
-        'utf8',
-        (err, data) => {
-          try {
-            const lines = data.split('\r\n');
-
-            const transmission = {
-              tech_in: 'N/A',
-              tech_for: 'N/A',
-              server_in: 'N/A',
-              server_for: 'N/A',
-              directory_in: 'N/A',
-              directory_for: 'N/A',
-              user_in: 'N/A',
-              user_for: 'N/A',
-              mask_archive_in: 'N/A',
-              mask_archive_for: 'N/A',
-              size_register_in: 'N/A',
-              size_register_for: 'N/A',
-              node_in: 'N/A',
-              node_for: 'N/A',
-              application_in: 'N/A',
-              application_for: 'N/A',
-              solution_agent_in: 'N/A',
-              solution_agent_for: 'N/A',
-              process_in: 'N/A',
-              process_for: 'N/A',
-            };
-
-            let transmission_pelican = false;
-            let transmission_conect = false;
-            let separate = '';
-
-            lines.forEach((line) => {
-              let trim_line = line.replace(/\s{2,}/g, ' ');
-              trim_line = trim_line.trim();
-
-              if (trim_line.search('EXEC PELREQ') !== -1) {
-                transmission.tech_in = 'PELICAN';
-                transmission.tech_for = 'PELICAN';
-                transmission_pelican = true;
-              }
-
-              if (trim_line.search('EXEC CONECT') !== -1) {
-                transmission.tech_in = 'CONECT';
-                transmission.tech_for = 'CONECT';
-                transmission_conect = true;
-              }
-
-              if (transmission_pelican) {
-                const [atribute, value] = trim_line.split('=');
-                switch (atribute) {
-                  case 'LOCAL':
-                    transmission.server_in = value;
-                    break;
-                  case 'DEST':
-                    transmission.server_for = value;
-                    break;
-                  case 'N':
-                    transmission.application_in = value;
-                    break;
-                  case 'DSNORIG':
-                    transmission.mask_archive_in = value;
-                    break;
-                  case 'MSG1':
-                    transmission.mask_archive_for = value;
-                    break;
-                  case 'MSG2':
-                    transmission.directory_for = value;
-                    break;
-                  case 'COMP':
-                    transmission_pelican = false;
-                    transmissions.push(transmission);
-                    break;
-                  default:
-                }
-              }
-
-              if (transmission_conect) {
-                const [atribute, value] = trim_line.split('=');
-                switch (atribute) {
-                  case 'SIGNON USERID':
-                    separate = value.indexOf(',');
-                    transmission.user_in = value.substr(1, separate);
-                    break;
-                  case 'SUBMIT PROC':
-                    transmission.application_in = value.substr(
-                      0,
-                      value.length - 2
-                    );
-                    break;
-                  case '&ORIGEM':
-                    transmission.server_in = value.substr(0, value.length - 2);
-                    break;
-                  case '&DESTINO':
-                    transmission.server_for = value.substr(0, value.length - 2);
-                    break;
-                  case '&ARQORIG':
-                    transmission.mask_archive_in = value.substr(
-                      0,
-                      value.length - 2
-                    );
-                    break;
-                  case '&ARQDEST':
-                    transmission.mask_archive_for = value;
-                    break;
-                  case 'SIGNOFF':
-                    transmission_conect = false;
-                    transmissions.push(transmission);
-                    console.log(transmissions);
-                    console.log('aki 3');
-                    break;
-                  default:
-                }
-              }
-            });
-          } catch (erro) {
-            console.log(err);
-          }
-        }
+    if (this.name.substr(0, 1) === '#') {
+      sigla_ambientes.forEach((sigla) =>
+        Array.prototype.push.apply(
+          this.transmissions,
+          this.parse(this.name.replace('#', sigla))
+        )
       );
-    }
-
-    if (name.substr(0, 1) === '#') {
-      console.log('aki 1');
-      sigla_ambientes.forEach((sigla) => Parse(name.replace('#', sigla)));
     } else {
-      console.log('aki 2');
-      Parse(name);
-      console.log(transmissions);
+      Array.prototype.push.apply(this.transmissions, this.parse(this.name));
     }
 
-    return res.json(transmissions);
+    for (let i = 0; i < this.transmissions.length; i += 1) {
+      for (let y = this.transmissions.length - 1; y > i; y -= 1) {
+        if (
+          this.transmissions[i].user_in === this.transmissions[y].user_in &&
+          this.transmissions[i].tech_in === this.transmissions[y].tech_in &&
+          this.transmissions[i].tech_for === this.transmissions[y].tech_for &&
+          this.transmissions[i].server_for ===
+            this.transmissions[y].server_for &&
+          this.transmissions[i].application_in ===
+            this.transmissions[y].application_in &&
+          this.transmissions[i].mask_archive_in ===
+            this.transmissions[y].mask_archive_in &&
+          this.transmissions[i].mask_archive_for ===
+            this.transmissions[y].mask_archive_for &&
+          this.transmissions[i].directory_for ===
+            this.transmissions[y].directory_for
+        ) {
+          this.transmissions[i].server_in = this.transmissions[
+            i
+          ].server_in.concat(' - ', this.transmissions[y].server_in);
+
+          this.transmissions.splice(y, 1);
+        }
+      }
+    }
+
+    return this.transmissions;
+  }
+
+  parse(job_name) {
+    const aux_transmissions = [];
+
+    let transmission_pelican = false;
+    let transmission_conect = false;
+    let separate = '';
+    let user_in = '';
+    let tech_in = '';
+    let tech_for = '';
+    let server_in = '';
+    let server_for = '';
+    let application_in = '';
+    let mask_archive_in = '';
+    let mask_archive_for = '';
+    let directory_for = '';
+
+    const job_file = fs.readFileSync(
+      `Z:\\COPERNIC_PASTAS_INDICE\\01. Fontes Dimensions R1\\PRODUCAO_JCL\\${job_name}.txt`,
+      'utf8',
+      'r'
+    );
+
+    const lines = job_file.split('\r\n');
+
+    lines.forEach((line) => {
+      let trim_line = line.replace(/\s{2,}/g, ' ');
+      trim_line = trim_line.trim();
+
+      if (trim_line.search('EXEC PELREQ') !== -1) {
+        tech_in = 'PELICAN';
+        tech_for = 'PELICAN';
+        transmission_pelican = true;
+      }
+
+      if (trim_line.search('EXEC CONECT') !== -1) {
+        tech_in = 'CONECT';
+        tech_for = 'CONECT';
+        transmission_conect = true;
+      }
+
+      if (transmission_pelican) {
+        const [atribute, value] = trim_line.split('=');
+        switch (atribute) {
+          case 'LOCAL':
+            server_in = value;
+            break;
+          case 'DEST':
+            server_for = value;
+            break;
+          case 'N':
+            application_in = value;
+            break;
+          case 'DSNORIG':
+            mask_archive_in = value;
+            break;
+          case 'MSG1':
+            mask_archive_for = value;
+            break;
+          case 'MSG2':
+            directory_for = value;
+            break;
+          case 'COMP':
+            transmission_pelican = false;
+            aux_transmissions.push({
+              user_in,
+              tech_in,
+              tech_for,
+              server_in,
+              server_for,
+              application_in,
+              mask_archive_in,
+              mask_archive_for,
+              directory_for,
+            });
+
+            user_in = '';
+            tech_in = '';
+            tech_for = '';
+            server_in = '';
+            server_for = '';
+            application_in = '';
+            mask_archive_in = '';
+            mask_archive_for = '';
+            directory_for = '';
+            break;
+          default:
+        }
+      }
+
+      if (transmission_conect) {
+        const [atribute, value] = trim_line.split('=');
+        switch (atribute) {
+          case 'SIGNON USERID':
+            separate = value.indexOf(',');
+            user_in = value.substr(1, separate);
+            break;
+          case 'SUBMIT PROC':
+            application_in = value.substr(0, value.length - 2);
+            break;
+          case '&ORIGEM':
+            server_in = value.substr(0, value.length - 2);
+            break;
+          case '&DESTINO':
+            server_for = value.substr(0, value.length - 2);
+            break;
+          case '&ARQORIG':
+            mask_archive_in = value.substr(0, value.length - 2);
+            break;
+          case '&DIRET':
+            directory_for = value.substr(0, value.length - 2);
+            break;
+          case '&ARQDEST':
+            mask_archive_for = value;
+            break;
+          case 'SIGNOFF':
+            transmission_conect = false;
+            aux_transmissions.push({
+              user_in,
+              tech_in,
+              tech_for,
+              server_in,
+              server_for,
+              application_in,
+              mask_archive_in,
+              mask_archive_for,
+              directory_for,
+            });
+
+            user_in = '';
+            tech_in = '';
+            tech_for = '';
+            server_in = '';
+            server_for = '';
+            application_in = '';
+            mask_archive_in = '';
+            mask_archive_for = '';
+            directory_for = '';
+
+            break;
+          default:
+        }
+      }
+    });
+
+    return aux_transmissions;
   }
 }
-
-export default new ParseTransmissionController();
