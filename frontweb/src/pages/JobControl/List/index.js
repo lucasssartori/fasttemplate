@@ -40,6 +40,25 @@ function JobControlList() {
 
   const dispatch = useDispatch();
 
+  const treatmentError = useCallback(
+    (error) => {
+      function treatment() {
+        if (error.response) {
+          const { status } = error.response;
+          if (status === 401) {
+            dispatch(signOut());
+          }
+        } else if (error.response.data.error) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error('Erro inesperado do sistema!');
+        }
+      }
+      treatment();
+    },
+    [dispatch]
+  );
+
   const loadJobs = useCallback(() => {
     async function load() {
       try {
@@ -72,16 +91,11 @@ function JobControlList() {
       } catch (error) {
         setJobs([]);
         setLoading(false);
-
-        if (error.response.status === 401) {
-          dispatch(signOut());
-        } else {
-          toast.error(error.response.data.error);
-        }
+        treatmentError(error);
       }
     }
     load();
-  }, [page, name, dispatch]);
+  }, [page, name, treatmentError]);
 
   useEffect(() => {
     loadJobs();
@@ -93,7 +107,7 @@ function JobControlList() {
       toast.success('Job excluido com sucesso!');
       loadJobs();
     } catch (error) {
-      toast.warn(error.response.data.error);
+      treatmentError(error);
     }
   }
 

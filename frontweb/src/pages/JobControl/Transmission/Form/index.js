@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Form } from '@unform/web';
@@ -36,6 +36,25 @@ function TransmissionForm() {
 
   const dispatch = useDispatch();
 
+  const treatmentError = useCallback(
+    (error) => {
+      function treatment() {
+        if (error.response) {
+          const { status } = error.response;
+          if (status === 401) {
+            dispatch(signOut());
+          }
+        } else if (error.response.data.error) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error('Erro inesperado do sistema!');
+        }
+      }
+      treatment();
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     async function loadTransmission() {
       try {
@@ -64,15 +83,11 @@ function TransmissionForm() {
           setTitle('Cadastro de Transmissão');
         }
       } catch (error) {
-        if (error.response.status && error.response.status === 401) {
-          dispatch(signOut());
-        } else {
-          toast.error(error.response.data.error);
-        }
+        treatmentError(error);
       }
     }
     loadTransmission();
-  }, [id, dispatch]);
+  }, [id, treatmentError]);
 
   async function handleSubmitAdd(data) {
     const aux_transmission = transmission;
@@ -198,7 +213,7 @@ function TransmissionForm() {
         });
         formRef.current.setErrors(validationErrors);
       } else {
-        toast.warn(errors.response.data.error);
+        treatmentError(errors);
       }
     }
   }

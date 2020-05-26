@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Form } from '@unform/web';
@@ -36,6 +36,25 @@ function JobControlForm() {
 
   const dispatch = useDispatch();
 
+  const treatmentError = useCallback(
+    (error) => {
+      function treatment() {
+        if (error.response) {
+          const { status } = error.response;
+          if (status === 401) {
+            dispatch(signOut());
+          }
+        } else if (error.response.data.error) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error('Erro inesperado do sistema!');
+        }
+      }
+      treatment();
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     async function loadJobs() {
       try {
@@ -60,15 +79,11 @@ function JobControlForm() {
           setTitle('Cadastro de Job');
         }
       } catch (error) {
-        if (error.response.status === 401) {
-          dispatch(signOut());
-        } else {
-          toast.error(error.response.data.error);
-        }
+        treatmentError(error);
       }
     }
     loadJobs();
-  }, [id, dispatch]);
+  }, [id, treatmentError]);
 
   async function handleSubmitAdd(data) {
     const aux_job = job;
@@ -125,7 +140,7 @@ function JobControlForm() {
         });
         formRef.current.setErrors(validationErrors);
       } else {
-        toast.warn(errors.response.data.error);
+        treatmentError(errors);
       }
     }
   }

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { MdArrowBack, MdDescription, MdAdd } from 'react-icons/md';
 
+import { signOut } from '~/store/modules/auth/actions';
 import api from '~/services/api';
 import history from '~/services/history';
 import Listing from './Listing';
@@ -30,6 +32,27 @@ function TransmissionList() {
   const [transmissios, setTransmissios] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
+
+  const treatmentError = useCallback(
+    (error) => {
+      function treatment() {
+        if (error.response) {
+          const { status } = error.response;
+          if (status === 401) {
+            dispatch(signOut());
+          }
+        } else if (error.response.data.error) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error('Erro inesperado do sistema!');
+        }
+      }
+      treatment();
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     async function loadJobs() {
       try {
@@ -50,17 +73,18 @@ function TransmissionList() {
         setTransmissios(data.Transmissions);
         setLoading(false);
       } catch (error) {
-        toast.error(error.response.data.error);
+        treatmentError(error);
       }
     }
     loadJobs();
-  }, [id]);
+  }, [id, treatmentError]);
 
   async function handleTransmissao() {
     try {
       await api.get(`transmissionstemplate/${job.id}`).then(({ data }) => {
         const downloadUrl = window.URL.createObjectURL(new Blob([data]));
         const link = document.createElement('a');
+
         link.href = downloadUrl;
         link.setAttribute(
           'download',
@@ -71,7 +95,7 @@ function TransmissionList() {
         link.remove();
       });
     } catch (error) {
-      toast.warn(error.response.data.error);
+      treatmentError(error);
     }
   }
 
