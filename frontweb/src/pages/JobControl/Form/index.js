@@ -86,6 +86,7 @@ function JobControlForm() {
   }, [id, treatmentError]);
 
   async function handleSubmitAdd(data) {
+    setLoading(true);
     const aux_job = job;
     delete aux_job.id;
 
@@ -132,6 +133,7 @@ function JobControlForm() {
         toast.success('Job cadastrado com sucesso!');
         history.push('/jobs/list');
       }
+      setLoading(false);
     } catch (errors) {
       const validationErrors = {};
       if (errors instanceof Yup.ValidationError) {
@@ -142,6 +144,7 @@ function JobControlForm() {
       } else {
         treatmentError(errors);
       }
+      setLoading(false);
     }
   }
 
@@ -157,12 +160,14 @@ function JobControlForm() {
             onClick={() => {
               history.push('/jobs/list');
             }}
+            loading={loading}
           />
           <SaveButton
             title="SALVAR"
             IconButton={MdSave}
             type="submit"
             form="job"
+            loading={loading}
           />
         </div>
       </HeaderPage>

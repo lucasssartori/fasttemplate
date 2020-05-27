@@ -13,6 +13,7 @@ import Input from '~/components/SimpleInput';
 import Select from '~/components/ReactSelect';
 import ObjetcEqual from '~/util/ObjetcEqual';
 import Technologies from '~/enums/EnumTechnologies';
+import AgenteSolution from '~/enums/EnumAgenteSolution';
 
 import {
   Container,
@@ -73,10 +74,12 @@ function TransmissionForm() {
             (option) => option.value === data.tech_for
           );
 
-          const tech_in = aux_tech_in.value;
-          const tech_for = aux_tech_for.value;
+          delete data.tech_in;
+          delete data.tech_for;
+          data.tech_in = aux_tech_in.value;
+          data.tech_for = aux_tech_for.value;
 
-          setTransmission(data, tech_in, tech_for);
+          setTransmission(data);
 
           setLoading(false);
         } else {
@@ -90,8 +93,13 @@ function TransmissionForm() {
   }, [id, treatmentError]);
 
   async function handleSubmitAdd(data) {
+    setLoading(true);
     const aux_transmission = transmission;
     delete aux_transmission.id;
+    delete aux_transmission.job_id;
+    delete aux_transmission.JobId;
+
+    console.log(aux_transmission);
 
     if (ObjetcEqual(aux_transmission, data)) {
       toast.warn('Não houve alteração da Transmissão!');
@@ -109,8 +117,18 @@ function TransmissionForm() {
         directory_for: Yup.string().required('Campo é obrigatório'),
         user_in: Yup.string().required('Campo é obrigatório'),
         user_for: Yup.string().required('Campo é obrigatório'),
-        mask_archive_in: Yup.string().required('Campo é obrigatório'),
-        mask_archive_for: Yup.string().required('Campo é obrigatório'),
+        mask_archive_in: Yup.string()
+          .required('Campo é obrigatório')
+          .max(
+            42,
+            'Tamanho do nome do arquivo poderá ser de no máximo 42 bytes.'
+          ),
+        mask_archive_for: Yup.string()
+          .required('Campo é obrigatório')
+          .max(
+            42,
+            'Tamanho do nome do arquivo poderá ser de no máximo 42 bytes.'
+          ),
         size_register_in: Yup.string().required('Campo é obrigatório'),
         size_register_for: Yup.string().required('Campo é obrigatório'),
         node_in: Yup.string().required('Campo é obrigatório'),
@@ -203,6 +221,7 @@ function TransmissionForm() {
         });
 
         toast.success('Transmissão cadastrada com sucesso!');
+        setLoading(false);
         history.goBack();
       }
     } catch (errors) {
@@ -215,6 +234,7 @@ function TransmissionForm() {
       } else {
         treatmentError(errors);
       }
+      setLoading(false);
     }
   }
 
@@ -230,12 +250,14 @@ function TransmissionForm() {
             onClick={() => {
               history.goBack();
             }}
+            loading={loading}
           />
           <SaveButton
             title="SALVAR"
             IconButton={MdSave}
             type="submit"
             form="transmission"
+            loading={loading}
           />
         </div>
       </HeaderPage>
@@ -391,16 +413,18 @@ function TransmissionForm() {
             </DivData>
             <DivData>
               <DivFild>
-                <Input
-                  label="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
+                <Select
+                  llabel="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
                   name="solution_agent_in"
+                  options={AgenteSolution}
                   placeholder="OP_STCVOZ_N2_ACC"
                 />
               </DivFild>
               <DivFild>
-                <Input
-                  label="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
+                <Select
+                  llabel="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
                   name="solution_agent_for"
+                  options={AgenteSolution}
                   placeholder="OP_STCVOZ_N2_ACC"
                 />
               </DivFild>
