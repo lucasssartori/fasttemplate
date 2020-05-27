@@ -2,9 +2,9 @@ import ParseTransmissionController from './ParseTransmissionController';
 
 class ParseTeste {
   async store(req, res) {
-    const { name } = req.body;
+    const { name, system } = req.body;
 
-    const parse = new ParseTransmissionController(name);
+    const parse = new ParseTransmissionController(name, system);
     const transmissions = parse.parseTransmission();
 
     return res.json(transmissions);

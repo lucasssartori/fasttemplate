@@ -37,7 +37,7 @@ class JobController {
 
     const { id } = await Job.create(req.body);
 
-    const parse = new ParseTransmissionController(name);
+    const parse = new ParseTransmissionController(name, system);
     const transmissions = parse.parseTransmission();
 
     transmissions.map(async (transmission) => {

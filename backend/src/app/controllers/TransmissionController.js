@@ -140,7 +140,31 @@ class TransmissionController {
   async indexById(req, res) {
     const { id } = req.params;
 
-    const transmission = await Transmission.findByPk(id);
+    const transmission = await Transmission.findByPk(id, {
+      attributes: [
+        'job_id',
+        'tech_in',
+        'tech_for',
+        'server_in',
+        'server_for',
+        'directory_in',
+        'directory_for',
+        'user_in',
+        'user_for',
+        'mask_archive_in',
+        'mask_archive_for',
+        'size_register_in',
+        'size_register_for',
+        'node_in',
+        'node_for',
+        'application_in',
+        'application_for',
+        'solution_agent_in',
+        'solution_agent_for',
+        'process_in',
+        'process_for',
+      ],
+    });
 
     if (!transmission) {
       return res.status(400).json({ error: 'Transmissão informada inválida.' });
