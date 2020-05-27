@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 import { MdArrowBack, MdDescription, MdAdd } from 'react-icons/md';
 
@@ -33,6 +34,8 @@ function TransmissionList() {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  const token = useSelector((state) => (state.auth ? state.auth.token : ''));
 
   const treatmentError = useCallback(
     (error) => {
@@ -81,18 +84,23 @@ function TransmissionList() {
 
   async function handleTransmissao() {
     try {
-      await api.get(`transmissionstemplate/${job.id}`).then(({ data }) => {
-        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+      axios({
+        url: `http://localhost:3333/transmissionstemplate/${job.id}`,
+        method: 'GET',
+        responseType: 'blob', // important
+        headers: {
+          Authorization: `Baerer ${token}`,
+        },
+      }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
-
-        link.href = downloadUrl;
+        link.href = url;
         link.setAttribute(
           'download',
           `Docmento_de_transmissão_${job.name}.docx`
-        ); // any other extension
+        );
         document.body.appendChild(link);
         link.click();
-        link.remove();
       });
     } catch (error) {
       treatmentError(error);
