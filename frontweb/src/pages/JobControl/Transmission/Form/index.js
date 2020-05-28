@@ -34,6 +34,7 @@ function TransmissionForm() {
   const [titleForm, setTitle] = useState('');
   const [transmission, setTransmission] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loadingStore, setLoadingStore] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -93,8 +94,9 @@ function TransmissionForm() {
   }, [id, treatmentError]);
 
   async function handleSubmitAdd(data) {
-    setLoading(true);
+    setLoadingStore(true);
     const aux_transmission = transmission;
+
     delete aux_transmission.id;
     delete aux_transmission.job_id;
     delete aux_transmission.JobId;
@@ -104,8 +106,9 @@ function TransmissionForm() {
       return;
     }
 
+    formRef.current.setErrors({});
+
     try {
-      formRef.current.setErrors({});
       const schema = Yup.object().shape({
         tech_in: Yup.string().required('Campo é obrigatório'),
         tech_for: Yup.string().required('Campo é obrigatório'),
@@ -219,7 +222,7 @@ function TransmissionForm() {
         });
 
         toast.success('Transmissão cadastrada com sucesso!');
-        setLoading(false);
+        setLoadingStore(false);
         history.goBack();
       }
     } catch (errors) {
@@ -228,11 +231,12 @@ function TransmissionForm() {
         errors.inner.forEach((error) => {
           validationErrors[error.path] = error.message;
         });
+
         formRef.current.setErrors(validationErrors);
       } else {
         treatmentError(errors);
       }
-      setLoading(false);
+      setLoadingStore(false);
     }
   }
 
@@ -248,14 +252,14 @@ function TransmissionForm() {
             onClick={() => {
               history.goBack();
             }}
-            loading={loading}
+            loading={loadingStore}
           />
           <SaveButton
             title="SALVAR"
             IconButton={MdSave}
             type="submit"
             form="transmission"
-            loading={loading}
+            loading={loadingStore}
           />
         </div>
       </HeaderPage>

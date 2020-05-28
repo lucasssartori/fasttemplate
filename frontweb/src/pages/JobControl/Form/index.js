@@ -33,6 +33,7 @@ function JobControlForm() {
   const [titleForm, setTitle] = useState('');
   const [job, setJob] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loadingStore, setLoadingStore] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -86,7 +87,7 @@ function JobControlForm() {
   }, [id, treatmentError]);
 
   async function handleSubmitAdd(data) {
-    setLoading(true);
+    setLoadingStore(true);
     const aux_job = job;
     delete aux_job.id;
 
@@ -97,6 +98,7 @@ function JobControlForm() {
 
     try {
       formRef.current.setErrors({});
+
       const schema = Yup.object().shape({
         name: Yup.string()
           .min(8, 'Nome deve possuir 8 caracteres')
@@ -133,7 +135,7 @@ function JobControlForm() {
         toast.success('Job cadastrado com sucesso!');
         history.push('/jobs/list');
       }
-      setLoading(false);
+      setLoadingStore(false);
     } catch (errors) {
       const validationErrors = {};
       if (errors instanceof Yup.ValidationError) {
@@ -144,7 +146,7 @@ function JobControlForm() {
       } else {
         treatmentError(errors);
       }
-      setLoading(false);
+      setLoadingStore(false);
     }
   }
 
@@ -160,14 +162,14 @@ function JobControlForm() {
             onClick={() => {
               history.push('/jobs/list');
             }}
-            loading={loading}
+            loading={loadingStore}
           />
           <SaveButton
             title="SALVAR"
             IconButton={MdSave}
             type="submit"
             form="job"
-            loading={loading}
+            loading={loadingStore}
           />
         </div>
       </HeaderPage>
