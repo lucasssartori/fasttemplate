@@ -44,9 +44,9 @@ function TransmissionList() {
           const { status } = error.response;
           if (status === 401) {
             dispatch(signOut());
+          } else if (error.response.data) {
+            toast.error(error.response.data.error);
           }
-        } else if (error.response.data.error) {
-          toast.error(error.response.data.error);
         } else {
           toast.error('Erro inesperado do sistema!');
         }

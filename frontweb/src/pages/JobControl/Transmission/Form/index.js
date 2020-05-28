@@ -44,9 +44,9 @@ function TransmissionForm() {
           const { status } = error.response;
           if (status === 401) {
             dispatch(signOut());
+          } else if (error.response.data) {
+            toast.error(error.response.data.error);
           }
-        } else if (error.response.data.error) {
-          toast.error(error.response.data.error);
         } else {
           toast.error('Erro inesperado do sistema!');
         }
@@ -98,8 +98,6 @@ function TransmissionForm() {
     delete aux_transmission.id;
     delete aux_transmission.job_id;
     delete aux_transmission.JobId;
-
-    console.log(aux_transmission);
 
     if (ObjetcEqual(aux_transmission, data)) {
       toast.warn('Não houve alteração da Transmissão!');
