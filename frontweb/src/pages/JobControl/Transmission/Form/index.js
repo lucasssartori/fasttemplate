@@ -412,7 +412,7 @@ function TransmissionForm() {
             <DivData>
               <DivFild>
                 <Select
-                  llabel="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
+                  label="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
                   name="solution_agent_in"
                   options={AgenteSolution}
                   placeholder="OP_STCVOZ_N2_ACC"
@@ -420,7 +420,7 @@ function TransmissionForm() {
               </DivFild>
               <DivFild>
                 <Select
-                  llabel="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
+                  label="9 -Agente solução no ARS  e  responsável pelo diretório/Manutenção"
                   name="solution_agent_for"
                   options={AgenteSolution}
                   placeholder="OP_STCVOZ_N2_ACC"
