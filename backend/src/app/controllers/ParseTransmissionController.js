@@ -213,8 +213,6 @@ export default class ParseTransmissionController {
           }
         }
       });
-
-      console.log(aux_transmissions);
       return aux_transmissions;
     } catch (error) {
       return aux_transmissions;
