@@ -5,7 +5,7 @@ class ParseTeste {
     const { name, system } = req.body;
 
     const parse = new ParseTransmissionController(name, system);
-    const transmissions = parse.parseTransmission();
+    const transmissions = await parse.parseTransmission();
 
     return res.json(transmissions);
   }

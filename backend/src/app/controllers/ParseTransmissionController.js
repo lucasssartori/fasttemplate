@@ -16,19 +16,24 @@ export default class ParseTransmissionController {
         'Z:\\COPERNIC_PASTAS_INDICE\\01. Fontes Dimensions R1\\PRODUCAO_JCL'
       );
 
-      const sigla_ambientes = ['U', 'H', 'N', 'R', 'Q'];
+      const sigla_ambientes = ['U', 'H', 'N', 'R'];
 
       if (
         (this.name.substr(0, 1) === '#' || this.name.substr(0, 1) === 'S') &&
         this.system.substr(0, 3) === 'STC'
       ) {
         const sigla_job = this.name.substr(0, 1);
-        sigla_ambientes.forEach(async (sigla) => {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const sigla of sigla_ambientes) {
+          // eslint-disable-next-line no-await-in-loop
           const retorno = await this.parse(this.name.replace(sigla_job, sigla));
           Array.prototype.push.apply(this.transmissions, retorno);
-        });
+        }
       } else {
-        Array.prototype.push.apply(this.transmissions, this.parse(this.name));
+        Array.prototype.push.apply(
+          this.transmissions,
+          await this.parse(this.name)
+        );
       }
 
       for (let i = 0; i < this.transmissions.length; i += 1) {
@@ -209,6 +214,7 @@ export default class ParseTransmissionController {
         }
       });
 
+      console.log(aux_transmissions);
       return aux_transmissions;
     } catch (error) {
       return aux_transmissions;
