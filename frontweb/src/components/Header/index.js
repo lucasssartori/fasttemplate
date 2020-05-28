@@ -13,6 +13,10 @@ export default function Header() {
 
   const dispatch = useDispatch();
 
+  const name = useSelector((state) =>
+    state.user.user ? state.user.user.name : ''
+  );
+
   function handleSignOut() {
     dispatch(signOut());
   }
@@ -40,10 +44,6 @@ export default function Header() {
       setMenuOpen('navbar');
     }
   }
-
-  const name = useSelector((state) =>
-    state.user.user.name ? state.user.user.name : ''
-  );
 
   return (
     <Container>

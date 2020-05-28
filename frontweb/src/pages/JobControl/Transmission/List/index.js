@@ -83,6 +83,11 @@ function TransmissionList() {
   }, [id, treatmentError]);
 
   async function handleTransmissao() {
+    if (transmissios.length < 1) {
+      toast.warn('Job não possui transmissão');
+      return;
+    }
+
     try {
       axios({
         url: `http://localhost:3333/transmissionstemplate/${job.id}`,
