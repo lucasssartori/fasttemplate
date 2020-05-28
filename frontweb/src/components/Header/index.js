@@ -41,8 +41,8 @@ export default function Header() {
     }
   }
 
-  const { name } = useSelector((state) =>
-    state.user ? state.user.user : { name: '' }
+  const name = useSelector((state) =>
+    state.user.user.name ? state.user.user.name : ''
   );
 
   return (
