@@ -118,18 +118,8 @@ function TransmissionForm() {
         directory_for: Yup.string().required('Campo é obrigatório'),
         user_in: Yup.string().required('Campo é obrigatório'),
         user_for: Yup.string().required('Campo é obrigatório'),
-        mask_archive_in: Yup.string()
-          .required('Campo é obrigatório')
-          .max(
-            42,
-            'Tamanho do nome do arquivo poderá ser de no máximo 42 bytes.'
-          ),
-        mask_archive_for: Yup.string()
-          .required('Campo é obrigatório')
-          .max(
-            42,
-            'Tamanho do nome do arquivo poderá ser de no máximo 42 bytes.'
-          ),
+        mask_archive_in: Yup.string().required('Campo é obrigatório'),
+        mask_archive_for: Yup.string().required('Campo é obrigatório'),
         size_register_in: Yup.string().required('Campo é obrigatório'),
         size_register_for: Yup.string().required('Campo é obrigatório'),
         node_in: Yup.string().required('Campo é obrigatório'),
