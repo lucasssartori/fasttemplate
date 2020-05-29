@@ -2,7 +2,7 @@ const Tecnologies = Object.freeze({
   FTP: Symbol('STC'),
   SFTP: Symbol('SFTP'),
   PELICAN: Symbol('PELICAN'),
-  CONNECT: Symbol('CONNECT'),
+  CONNECT: Symbol('CONECT'),
 });
 
 export default Tecnologies;
