@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
 import fs from 'fs';
 import { promisify } from 'util';
 import SolutionAgent from './enums/EnumSolutionAgent';
@@ -13,21 +15,26 @@ export default class ParseTransmissionController {
     const access = promisify(fs.access);
 
     try {
-      await access(
-        'Z:\\COPERNIC_PASTAS_INDICE\\01. Fontes Dimensions R1\\PRODUCAO_JCL'
-      );
+      await access('Z:\\COPERNIC_PASTAS_INDICE');
 
-      const sigla_ambientes = ['U', 'H', 'N', 'R', 'Q'];
+      const sigla_ambientes = [
+        { site_uf: 'MG', sigla_ambiente: 'U' },
+        { site_uf: 'BA', sigla_ambiente: 'H' },
+        { site_uf: 'PE', sigla_ambiente: 'N' },
+        { site_uf: 'RJ', sigla_ambiente: 'R' },
+        { site_uf: 'UN', sigla_ambiente: 'Q' },
+        { site_uf: '31 Global', sigla_ambiente: 'T' },
+        { site_uf: 'Pegasus', sigla_ambiente: 'J' },
+      ];
 
-      if (
-        (this.name.substr(0, 1) === '#' || this.name.substr(0, 1) === 'S') &&
-        this.system.substr(0, 3) === 'STC'
-      ) {
+      if (this.name.substr(0, 1) === '#' || this.name.substr(0, 1) === 'S') {
         const sigla_job = this.name.substr(0, 1);
-        // eslint-disable-next-line no-restricted-syntax
+
         for (const sigla of sigla_ambientes) {
-          // eslint-disable-next-line no-await-in-loop
-          const retorno = await this.parse(this.name.replace(sigla_job, sigla));
+          const retorno = await this.parse(
+            this.name.replace(sigla_job, sigla.sigla_ambiente),
+            sigla.site_uf
+          );
           Array.prototype.push.apply(this.transmissions, retorno);
         }
       } else {
@@ -80,7 +87,7 @@ export default class ParseTransmissionController {
     }
   }
 
-  async parse(job_name) {
+  async parse(job_name, site_uf = 'MG') {
     const aux_transmissions = [];
 
     let transmission_pelican = false;
@@ -97,6 +104,8 @@ export default class ParseTransmissionController {
     let directory_for = '';
     let node_in = '';
     let node_for = '';
+
+    let mask_archive_in_proc = '';
 
     const solution_agent_in =
       this.system === 'SAC'
@@ -151,6 +160,8 @@ export default class ParseTransmissionController {
               break;
             case 'DSNORIG':
               mask_archive_in = value;
+              mask_archive_in_proc = mask_archive_in.replace(/%%\./g, '.');
+              mask_archive_in_proc = mask_archive_in_proc.replace(/%%/g, '&');
               break;
             case 'MSG1':
               mask_archive_for = value;
@@ -174,6 +185,7 @@ export default class ParseTransmissionController {
                 node_for,
                 solution_agent_in,
                 solution_agent_for,
+                mask_archive_in_proc,
               });
 
               user_in = '';
@@ -212,6 +224,8 @@ export default class ParseTransmissionController {
               break;
             case '&ARQORIG':
               mask_archive_in = value.substr(0, value.length - 2);
+              mask_archive_in_proc = mask_archive_in.replace('%%.', '.');
+              mask_archive_in_proc = mask_archive_in_proc.replace('%%', '&');
               break;
             case '&DIRET':
               directory_for = value.substr(0, value.length - 2);
@@ -235,6 +249,7 @@ export default class ParseTransmissionController {
                 node_for,
                 solution_agent_in,
                 solution_agent_for,
+                mask_archive_in_proc,
               });
 
               user_in = '';

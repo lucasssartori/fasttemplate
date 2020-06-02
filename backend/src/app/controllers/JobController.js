@@ -37,13 +37,15 @@ class JobController {
 
     const { id } = await Job.create(req.body);
 
-    const parse = new ParseTransmissionController(name, system);
-    const transmissions = await parse.parseTransmission();
+    if (system.search('STC') !== -1 || system.search('SISRAF') !== -1) {
+      const parse = new ParseTransmissionController(name, system);
+      const transmissions = await parse.parseTransmission();
 
-    transmissions.map(async (transmission) => {
-      transmission.job_id = id;
-      await Transmission.create(transmission);
-    });
+      transmissions.map(async (transmission) => {
+        transmission.job_id = id;
+        await Transmission.create(transmission);
+      });
+    }
 
     return res.json({
       id,
