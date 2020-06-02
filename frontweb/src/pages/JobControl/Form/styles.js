@@ -78,3 +78,12 @@ export const Mensagem = styled.div`
     color: #666666;
   }
 `;
+
+export const InformationParse = styled.div`
+  padding: 26px 30px;
+
+  p {
+    font-size: 14px;
+    color: #333fff;
+  }
+`;

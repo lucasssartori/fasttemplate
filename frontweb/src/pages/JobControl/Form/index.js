@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Form } from '@unform/web';
@@ -24,6 +30,7 @@ import {
   DivData,
   DivDescription,
   Mensagem,
+  InformationParse,
 } from './styles';
 
 function JobControlForm() {
@@ -32,8 +39,30 @@ function JobControlForm() {
   const { id } = useParams();
   const [titleForm, setTitle] = useState('');
   const [job, setJob] = useState({});
+  const [name_parse, setName] = useState('');
+  const [system_parse, setSystem] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingStore, setLoadingStore] = useState(false);
+
+  const parse_information = useMemo(() => {
+    async function loadJobs() {
+      if (!id && name_parse !== '' && system_parse !== '') {
+        const response = await api.get(`jobparse`, {
+          params: {
+            name: name_parse,
+            system: system_parse,
+          },
+        });
+
+        if (response.data.transmissions.length > 0) {
+          return `Etapa possui ${response.data.transmissions.length} para ser importadas.`;
+        }
+        return '';
+      }
+      return '';
+    }
+    loadJobs();
+  }, [id, name_parse, system_parse]);
 
   const dispatch = useDispatch();
 
@@ -191,6 +220,7 @@ function JobControlForm() {
                   label="Nome do Job"
                   name="name"
                   placeholder="Informe o nome do Job"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div>
@@ -199,6 +229,7 @@ function JobControlForm() {
                   name="system"
                   options={Systems}
                   placeholder="Informe o sistema"
+                  onChange={(e) => setSystem(e.state.value.value)}
                 />
               </div>
             </DivData>
@@ -210,6 +241,11 @@ function JobControlForm() {
               />
             </DivDescription>
           </Form>
+          {!id && (
+            <InformationParse>
+              <p>{parse_information}</p>
+            </InformationParse>
+          )}
         </ContentForm>
       )}
     </Container>

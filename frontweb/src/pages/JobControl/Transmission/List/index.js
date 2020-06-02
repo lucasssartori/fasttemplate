@@ -88,6 +88,23 @@ function TransmissionList() {
       return;
     }
 
+    let docx_ok = false;
+    transmissios.forEach((item, index) => {
+      const props_item = Object.getOwnPropertyNames(item);
+
+      for (let i = 0; i < props_item.length; i += 1) {
+        if (item[props_item[i]] === null || item[props_item[i]] === '') {
+          toast.warn(`Transmissão ${index + 1} possui campos em branco`);
+          docx_ok = true;
+          return;
+        }
+      }
+    });
+
+    if (docx_ok) {
+      return;
+    }
+
     try {
       axios({
         url: `http://localhost:3333/transmissionstemplate/${job.id}`,

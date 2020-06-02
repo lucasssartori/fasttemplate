@@ -6,7 +6,7 @@ export default function ObjetcEqual(a, b) {
     return false;
   }
 
-  for (let i = 0; i < aProps.length; i++) {
+  for (let i = 0; i < aProps.length; i += 1) {
     const propName = aProps[i];
 
     if (a[propName] !== b[propName]) {

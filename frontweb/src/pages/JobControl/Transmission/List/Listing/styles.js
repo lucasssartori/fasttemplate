@@ -69,28 +69,52 @@ export const CloseBotton = styled.button`
   }
 `;
 
+export const DivHeader = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+
+  h2 {
+    font-weight: normal;
+    font-size: 16px;
+    color: #03022e;
+  }
+`;
+
 export const SourseDestiny = styled.div`
   display: flex;
   flex-direction: row;
-`;
 
-export const DivLabel = styled.div`
-  display: flex;
-  flex: 3;
-  min-height: 30px;
-  max-height: max-content;
-  align-items: center;
-  padding: 3px;
-  border-radius: 5px;
-  border: 1px solid #dddddd;
-  background: #eeeeee;
-  margin: 10px;
+  div {
+    display: flex;
+    flex: 3;
+    min-height: 30px;
+    max-height: max-content;
+    align-items: center;
+    padding: 3px;
+    border-radius: 5px;
+    border: 1px solid #dddddd;
+    background: #eeeeee;
+    margin: 10px;
 
-  p {
-    font-size: 10px;
-    line-height: 19px;
-    margin-left: 5px;
-    color: #444444;
+    p {
+      font-size: 10px;
+      line-height: 19px;
+      margin-left: 5px;
+      color: #444444;
+    }
+  }
+
+  .normalize {
+    border: 1px solid #dddddd;
+    background: #eeeeee;
+  }
+
+  .criticized {
+    border: 1px solid #de3b3b;
+    background: #fab0b0;
   }
 `;
 

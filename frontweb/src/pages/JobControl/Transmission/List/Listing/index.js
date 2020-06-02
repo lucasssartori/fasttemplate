@@ -11,8 +11,8 @@ import {
   DataTransmission,
   SourseDestiny,
   LabelData,
-  DivLabel,
   Mensagem,
+  DivHeader,
   DivHead,
   DivButons,
   DivActions,
@@ -99,8 +99,8 @@ function TransmissionList({ transmissios, setTransmissios }) {
       <h1>Não foi encontrado nenhuma Transmissão</h1>
     </Mensagem>
   ) : (
-    transmissios.map((item) => (
-      <DataTransmission key={item.id} in={item.checked} collapsedHeight={240}>
+    transmissios.map((item, index) => (
+      <DataTransmission key={item.id} in={item.checked} collapsedHeight={245}>
         <DivButons>
           {item.checked ? (
             <DivActions>
@@ -121,6 +121,9 @@ function TransmissionList({ transmissios, setTransmissios }) {
             </OpenButton>
           )}
         </DivButons>
+        <DivHeader>
+          <h2>Transmissão {index + 1} </h2>
+        </DivHeader>
         <SourseDestiny>
           <DivHead>
             <h3>Origem</h3>
@@ -131,99 +134,141 @@ function TransmissionList({ transmissios, setTransmissios }) {
         </SourseDestiny>
         <LabelData>1 – Forma de envio</LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div className={item.tech_in === null ? 'criticized' : 'normalize'}>
             <p>{item.tech_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div className={item.tech_for === null ? 'criticized' : 'normalize'}>
             <p>{item.tech_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
         <LabelData>2 – Servidor (ambiente/Nome/IP)</LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div className={item.server_in === null ? 'criticized' : 'normalize'}>
             <p>{item.server_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div
+            className={item.server_for === null ? 'criticized' : 'normalize'}
+          >
             <p>{item.server_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
         <LabelData>
           3 – Caminho / PATH (Diretório / FS / Data Set, etc)
         </LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div
+            className={item.directory_in === null ? 'criticized' : 'normalize'}
+          >
             <p>{item.directory_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div
+            className={item.directory_for === null ? 'criticized' : 'normalize'}
+          >
             <p>{item.directory_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
         <LabelData>
           4 – Usuário executor do Processo Control-M(Ambiente Distribuído)
         </LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div className={item.user_in === null ? 'criticized' : 'normalize'}>
             <p>{item.user_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div className={item.user_for === null ? 'criticized' : 'normalize'}>
             <p>{item.user_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
         <LabelData>5 – Máscara do arquivo</LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div
+            className={
+              item.mask_archive_in === null ? 'criticized' : 'normalize'
+            }
+          >
             <p>{item.mask_archive_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div
+            className={
+              item.mask_archive_for === null ? 'criticized' : 'normalize'
+            }
+          >
             <p>{item.mask_archive_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
         <LabelData>6 – Tam. Registro / DCB / ???CYL</LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div
+            className={
+              item.size_register_in === null ? 'criticized' : 'normalize'
+            }
+          >
             <p>{item.size_register_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div
+            className={
+              item.size_register_for === null ? 'criticized' : 'normalize'
+            }
+          >
             <p>{item.size_register_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
         <LabelData>7 – Identificação:Node (Connect) / Site (Pelican)</LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div className={item.node_in === null ? 'criticized' : 'normalize'}>
             <p>{item.node_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div className={item.node_for === null ? 'criticized' : 'normalize'}>
             <p>{item.node_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
         <LabelData>8 - Aplicação(XFB) / Process Name (CD)</LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div
+            className={
+              item.application_in === null ? 'criticized' : 'normalize'
+            }
+          >
             <p>{item.application_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div
+            className={
+              item.application_for === null ? 'criticized' : 'normalize'
+            }
+          >
             <p>{item.application_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
         <LabelData>
           9 -Agente solução no ARS e responsável pelo diretório/Manutenção
         </LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div
+            className={
+              item.solution_agent_in === null ? 'criticized' : 'normalize'
+            }
+          >
             <p>{item.solution_agent_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div
+            className={
+              item.solution_agent_for === null ? 'criticized' : 'normalize'
+            }
+          >
             <p>{item.solution_agent_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
         <LabelData>10 – Aplicação do processo</LabelData>
         <SourseDestiny>
-          <DivLabel>
+          <div
+            className={item.process_in === null ? 'criticized' : 'normalize'}
+          >
             <p>{item.process_in}</p>
-          </DivLabel>
-          <DivLabel>
+          </div>
+          <div
+            className={item.process_for === null ? 'criticized' : 'normalize'}
+          >
             <p>{item.process_for}</p>
-          </DivLabel>
+          </div>
         </SourseDestiny>
       </DataTransmission>
     ))
