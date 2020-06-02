@@ -6,16 +6,11 @@ import JobController from './app/controllers/JobController';
 import TransmissionController from './app/controllers/TransmissionController';
 import TransmissionTemplateController from './app/controllers/TransmissionTemplateController';
 
-import ParseTeste from './app/controllers/ParseTeste';
+import ParseTransmission from './app/controllers/ParseTransmissionController';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
-
-// ---------------------------------------------------------------------------------
-// Teste de funcionalidade
-// ---------------------------------------------------------------------------------
-routes.post('/parse', ParseTeste.store);
 
 // ---------------------------------------------------------------------------------
 // User
@@ -56,6 +51,7 @@ routes.get('/transmissionsjobs/:id', TransmissionController.index);
 // ---------------------------------------------------------------------------------
 // Gera documentos
 // ---------------------------------------------------------------------------------
+routes.get('/jobparse', ParseTransmission.index);
 routes.get('/transmissionstemplate/:id', TransmissionTemplateController.index);
 
 export default routes;

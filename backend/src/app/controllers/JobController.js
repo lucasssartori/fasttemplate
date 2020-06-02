@@ -4,7 +4,7 @@ import { Op } from 'sequelize';
 import Job from '../models/Job';
 import Transmission from '../models/Transmission';
 import Systems from './enums/EnumSystems';
-import ParseTransmissionController from './ParseTransmissionController';
+import ParseTransmission from './ParseTransmission';
 
 class JobController {
   async store(req, res) {
@@ -38,7 +38,7 @@ class JobController {
     const { id } = await Job.create(req.body);
 
     if (system.search('STC') !== -1 || system.search('SISRAF') !== -1) {
-      const parse = new ParseTransmissionController(name, system);
+      const parse = new ParseTransmission(name, system);
       const transmissions = await parse.parseTransmission();
 
       transmissions.map(async (transmission) => {
