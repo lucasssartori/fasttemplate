@@ -80,10 +80,37 @@ export const Mensagem = styled.div`
 `;
 
 export const InformationParse = styled.div`
-  padding: 26px 30px;
+  display: flex;
+  flex: 1;
 
-  p {
-    font-size: 14px;
-    color: #333fff;
+  div {
+    display: flex;
+    flex: 1;
+    height: 0px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  div.error {
+    height: 30px;
+    background-color: #fab0b0;
+    h1 {
+      font-weight: normal;
+      font-size: 12px;
+      color: #de3b3b;
+    }
+  }
+
+  div.sucess {
+    height: 30px;
+    flex: 1;
+    background-color: #dff0df;
+    h1 {
+      font-weight: normal;
+      font-size: 12px;
+      color: #2ca42b;
+    }
   }
 `;

@@ -42,27 +42,9 @@ function JobControlForm() {
   const [name_parse, setName] = useState('');
   const [system_parse, setSystem] = useState('');
   const [loading, setLoading] = useState(false);
-  const [loadingStore, setLoadingStore] = useState(false);
-
-  const parse_information = useMemo(() => {
-    async function loadJobs() {
-      if (!id && name_parse !== '' && system_parse !== '') {
-        const response = await api.get(`jobparse`, {
-          params: {
-            name: name_parse,
-            system: system_parse,
-          },
-        });
-
-        if (response.data.transmissions.length > 0) {
-          return `Etapa possui ${response.data.transmissions.length} para ser importadas.`;
-        }
-        return '';
-      }
-      return '';
-    }
-    loadJobs();
-  }, [id, name_parse, system_parse]);
+  const [loading_store, setLoadingStore] = useState(false);
+  const [parse_information, setParseInformation] = useState('');
+  const [transmisions, settransmissions] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -84,6 +66,33 @@ function JobControlForm() {
     },
     [dispatch]
   );
+
+  useMemo(async () => {
+    if (!id && name_parse !== '' && system_parse !== '') {
+      const response = await api.get(`jobparse`, {
+        params: {
+          name: name_parse,
+          system: system_parse,
+        },
+      });
+
+      settransmissions(response.data.transmissions);
+
+      if (response.data.transmissions.length > 0) {
+        if (response.data.transmissions.length > 1) {
+          setParseInformation(
+            `Foram encontradas ${response.data.transmissions.length} transmissões para serem importadas.`
+          );
+        } else {
+          setParseInformation(
+            `Foi encontrada ${response.data.transmissions.length} transmissão para ser importada.`
+          );
+        }
+      } else {
+        setParseInformation(`Não foi encontrado transmissões para esta etapa.`);
+      }
+    }
+  }, [id, name_parse, system_parse]);
 
   useEffect(() => {
     async function loadJobs() {
@@ -147,7 +156,7 @@ function JobControlForm() {
 
       if (id) {
         await api.put(`jobs/${id}`, {
-          name: name.toUpperCase(),
+          name,
           system,
           description,
         });
@@ -156,7 +165,7 @@ function JobControlForm() {
         history.push('/jobs/list');
       } else {
         await api.post('jobs', {
-          name: name.toUpperCase(),
+          name,
           system,
           description,
         });
@@ -191,14 +200,14 @@ function JobControlForm() {
             onClick={() => {
               history.push('/jobs/list');
             }}
-            loading={loadingStore}
+            loading={loading_store}
           />
           <SaveButton
             title="SALVAR"
             IconButton={MdSave}
             type="submit"
             form="job"
-            loading={loadingStore}
+            loading={loading_store}
           />
         </div>
       </HeaderPage>
@@ -220,7 +229,10 @@ function JobControlForm() {
                   label="Nome do Job"
                   name="name"
                   placeholder="Informe o nome do Job"
-                  onChange={(e) => setName(e.target.value)}
+                  onBlur={(e) => setName(e.target.value)}
+                  onKeyUp={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                  }}
                 />
               </div>
               <div>
@@ -229,7 +241,7 @@ function JobControlForm() {
                   name="system"
                   options={Systems}
                   placeholder="Informe o sistema"
-                  onChange={(e) => setSystem(e.state.value.value)}
+                  onChange={(e) => setSystem(e.value)}
                 />
               </div>
             </DivData>
@@ -241,9 +253,11 @@ function JobControlForm() {
               />
             </DivDescription>
           </Form>
-          {!id && (
+          {!id && parse_information && (
             <InformationParse>
-              <p>{parse_information}</p>
+              <div className={transmisions.length > 0 ? 'sucess' : 'error'}>
+                <h1>{parse_information}</h1>
+              </div>
             </InformationParse>
           )}
         </ContentForm>
