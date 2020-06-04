@@ -11,14 +11,14 @@ class JobController {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       system: Yup.string().required(),
-      description: Yup.string(),
+      description: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação dos campos.' });
     }
 
-    const { name, system, description } = req.body;
+    const { name, system, description, ind_parse } = req.body;
 
     const existJob = await Job.findOne({
       where: {
@@ -105,10 +105,12 @@ class JobController {
   async index(req, res) {
     const { name = '', page = 1 } = req.query;
 
+    const query_name = name.replace('#', '');
+
     const jobs = await Job.findAll({
       where: {
         name: {
-          [Op.iLike]: `%${name}%`,
+          [Op.iLike]: `%${query_name}%`,
         },
       },
       limit: 10,
