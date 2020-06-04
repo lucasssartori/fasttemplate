@@ -18,7 +18,7 @@ class JobController {
       return res.status(400).json({ error: 'Falha na validação dos campos.' });
     }
 
-    const { name, system, description, ind_parse } = req.body;
+    const { name, system, description } = req.body;
 
     const existJob = await Job.findOne({
       where: {
