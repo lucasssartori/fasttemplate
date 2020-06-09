@@ -7,7 +7,7 @@ import { confirmAlert } from 'react-confirm-alert';
 
 import { signOut } from '~/store/modules/auth/actions';
 import api from '~/services/api';
-import history from '~/services/history';
+import History from '~/services/history';
 import Pagination from '~/components/Pagination';
 import Input from '~/components/SimpleInput';
 import Actions from '~/components/MenuActions';
@@ -156,7 +156,7 @@ function JobControlList() {
             IconButton={MdAdd}
             type="button"
             onClick={() => {
-              history.push('/jobs/store');
+              History.push('/jobs/store');
             }}
           />
         </Options>
@@ -211,10 +211,10 @@ function JobControlList() {
                 </DivDescription>
                 <DivActions>
                   <Actions
-                    Edit={() => history.push(`/jobs/update/${item.id}`)}
+                    Edit={() => History.push(`/jobs/update/${item.id}`)}
                     Delete={() => confirmDelete(item)}
                     Transmission={() =>
-                      history.push(`/transmission/list/${item.id}`)
+                      History.push(`/transmission/list/${item.id}`)
                     }
                   />
                 </DivActions>

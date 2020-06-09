@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 
 import { signOut } from '~/store/modules/auth/actions';
 import api from '~/services/api';
-import history from '~/services/history';
+import History from '~/services/history';
 import Input from '~/components/SimpleInput';
 import TextArea from '~/components/TextArea';
 import Select from '~/components/ReactSelect';
@@ -162,7 +162,7 @@ function JobControlForm() {
         });
 
         toast.success('Job atualizado com sucesso!');
-        history.push('/jobs/list');
+        History.push('/jobs/list');
       } else {
         await api.post('jobs', {
           name,
@@ -171,7 +171,7 @@ function JobControlForm() {
         });
 
         toast.success('Job cadastrado com sucesso!');
-        history.push('/jobs/list');
+        History.push('/jobs/list');
       }
       setLoadingStore(false);
     } catch (errors) {
@@ -198,7 +198,7 @@ function JobControlForm() {
             IconButton={MdArrowBack}
             type="button"
             onClick={() => {
-              history.push('/jobs/list');
+              History.push('/jobs/list');
             }}
             loading={loading_store}
           />

@@ -84,9 +84,9 @@ export default function Header() {
                   activeStyle={{
                     color: '#eeeeee',
                   }}
-                  to="/history/list"
+                  to="/stories/list"
                   isActive={(match, location) => {
-                    if (location.pathname.indexOf('/history/') !== -1) {
+                    if (location.pathname.indexOf('/stories/') !== -1) {
                       return true;
                     }
                     return false;
