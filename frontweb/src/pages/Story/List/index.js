@@ -7,7 +7,7 @@ import { confirmAlert } from 'react-confirm-alert';
 
 import { signOut } from '~/store/modules/auth/actions';
 import api from '~/services/api';
-import History from '~/services/history';
+import history from '~/services/history';
 import Pagination from '~/components/Pagination';
 import Input from '~/components/SimpleInput';
 import Actions from '~/components/MenuActions';
@@ -30,7 +30,7 @@ import {
 } from './styles';
 
 function HistoryList() {
-  const [history, setHistory] = useState([]);
+  const [story, setStory] = useState([]);
   const [query_name = '', setQueryName] = useState();
   const [page = 1, setPage] = useState();
   const [loading, setLoading] = useState(false);
@@ -59,17 +59,17 @@ function HistoryList() {
     async function load() {
       try {
         setLoading(true);
-        const response = await api.get('history', {
+        const response = await api.get('stories', {
           params: {
             query_name,
             page,
           },
         });
 
-        setHistory(response.data);
+        setStory(response.data);
         setLoading(false);
       } catch (error) {
-        loadHistory([]);
+        setStory([]);
         setLoading(false);
         treatmentError(error);
       }
@@ -83,7 +83,7 @@ function HistoryList() {
 
   async function handleDelete(historyDelete) {
     try {
-      await api.delete(`history/${historyDelete.id}`);
+      await api.delete(`stories/${historyDelete.id}`);
       toast.success('História excluida com sucesso!');
       loadHistory();
     } catch (error) {
@@ -117,7 +117,7 @@ function HistoryList() {
         <Options>
           <Form>
             <Input
-              name="history_search"
+              name="story_search"
               IconInput={MdSearch}
               onChange={(e) => setQueryName(e.target.value)}
               placeholder="Digite o nome da história"
@@ -136,7 +136,7 @@ function HistoryList() {
             IconButton={MdAdd}
             type="button"
             onClick={() => {
-              History.push('/history/store');
+              history.push('/stories/store');
             }}
           />
         </Options>
@@ -161,13 +161,13 @@ function HistoryList() {
           <Mensagem>
             <h1>Carregando Histórias...</h1>
           </Mensagem>
-        ) : history.length <= 0 ? (
+        ) : story.length <= 0 ? (
           <Mensagem>
             <h1>Não foi encontrado nenhuma história</h1>
           </Mensagem>
         ) : (
           <Table>
-            {history.map((item) => (
+            {story.map((item) => (
               <TableRow key={item.id}>
                 <DivID>
                   <TextTable>#{item.id}</TextTable>
@@ -177,7 +177,7 @@ function HistoryList() {
                 </DivName>
                 <DivActions>
                   <Actions
-                    Edit={() => History.push(`/history/update/${item.id}`)}
+                    Edit={() => history.push(`/stories/update/${item.id}`)}
                     Delete={() => confirmDelete(item)}
                   />
                 </DivActions>
@@ -186,7 +186,7 @@ function HistoryList() {
           </Table>
         )}
       </ContentTable>
-      <Pagination page={page} setPage={setPage} list={history} />
+      <Pagination page={page} setPage={setPage} list={story} />
     </Container>
   );
 }

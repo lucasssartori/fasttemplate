@@ -15,6 +15,7 @@ import ObjetcEqual from '~/util/ObjetcEqual';
 import Input from '~/components/SimpleInput';
 import TextArea from '~/components/TextArea';
 import Select from '~/components/ReactSelect';
+import UiInputRadio from '~/components/UiInputRadio';
 
 import {
   Container,
@@ -33,6 +34,11 @@ function HistoryForm() {
   const [story, setStory] = useState({});
   const [loading, setLoading] = useState(false);
   const [loading_store, setLoadingStore] = useState(false);
+
+  const options_yes_or_no = [
+    { value: 'SIM', label: 'Sim' },
+    { value: 'NAO', label: 'Não' },
+  ];
 
   const dispatch = useDispatch();
 
@@ -108,23 +114,23 @@ function HistoryForm() {
       const { name, system, description } = data;
 
       if (id) {
-        await api.put(`story/${id}`, {
+        await api.put(`stories/${id}`, {
           name,
           system,
           description,
         });
 
         toast.success('Historia atualizada com sucesso!');
-        history.push('/story/list');
+        history.push('/stories/list');
       } else {
-        await api.post('story', {
+        await api.post('stories', {
           name,
           system,
           description,
         });
 
         toast.success('Historia cadastrada com sucesso!');
-        history.push('/story/list');
+        history.push('/stories/list');
       }
       setLoadingStore(false);
     } catch (errors) {
@@ -151,7 +157,7 @@ function HistoryForm() {
             IconButton={MdArrowBack}
             type="button"
             onClick={() => {
-              story.push('/stories/list');
+              history.push('/stories/list');
             }}
             loading={loading_store}
           />
@@ -175,7 +181,68 @@ function HistoryForm() {
             ref={formRef}
             id="story"
             onSubmit={handleSubmitAdd}
-          />
+          >
+            <Input
+              label="Historia:"
+              name="story"
+              placeholder="Informe a historia"
+            />
+
+            <Input
+              label="Projeto:"
+              name="project"
+              placeholder="Informe o projeto"
+            />
+            <Input
+              label="Desenvolvedor:"
+              name="development"
+              placeholder="Informe o nome do desenvolvedor"
+            />
+            <Input
+              label="RN:"
+              name="num_rn"
+              placeholder="Informe o número do RN:"
+            />
+            <Input
+              label="Squad:"
+              name="noma_squad"
+              placeholder="Informe a Squad:"
+            />
+            <Input
+              label="Sprint:"
+              name="num_sprint"
+              placeholder="Informe o número da sprint:"
+            />
+            <h3>Performance</h3>
+            <UiInputRadio
+              name="massive_update"
+              label="O processo realiza atualização massiva?"
+              options={options_yes_or_no}
+            />
+
+            <label>
+              Processo realiza atualização de bases corporativas/multi empresa?
+            </label>
+            <h3>Impacto Macros</h3>
+            <label>Processo altera telas já existentes no sistema?</label>
+            <h3>Carga</h3>
+            <label>
+              Caso possua processo de carga foi previsto volumetria?
+            </label>
+            <h3>Liga Desliga</h3>
+            <label>Será necessário solução de liga e desliga?</label>
+            <h3>SOA</h3>
+            <label>Será necessário roteamento de requisições do SOA?</label>
+            <label>
+              Como será feito o roteamento de eventos? (DDD, UF, empresa...
+              Outros)
+            </label>
+            <h3>Implantação</h3>
+            <label>
+              A US precisa implantar junto a outros sistemas? Esta previsto
+              implantação conjunta?
+            </label>
+          </Form>
         </ContentForm>
       )}
     </Container>

@@ -8,8 +8,8 @@ import JobsList from '~/pages/JobControl/List';
 import JobsStore from '~/pages/JobControl/Form';
 import TransmissonList from '~/pages/JobControl/Transmission/List';
 import TransmissonStore from '~/pages/JobControl/Transmission/Form';
-import HistoryList from '~/pages/History/List';
-import HistoryStore from '~/pages/History/Form';
+import StoryList from '~/pages/Story/List';
+import StoryStore from '~/pages/Story/Form';
 
 export default function Routes() {
   return (
@@ -37,9 +37,9 @@ export default function Routes() {
         isPrivate
       />
 
-      <Route path="/stories/list" component={HistoryList} isPrivate />
-      <Route path="/stories/store" component={HistoryStore} isPrivate />
-      <Route path="/stories/update/:id" component={HistoryStore} isPrivate />
+      <Route path="/stories/list" component={StoryList} isPrivate />
+      <Route path="/stories/store" component={StoryStore} isPrivate />
+      <Route path="/stories/update/:id" component={StoryStore} isPrivate />
     </Switch>
   );
 }
